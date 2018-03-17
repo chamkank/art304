@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET artists listing. */
+/* GET (render) artists listing. */
 router.get('/', function(req, res, next) {
   // Render the list of artists here.
 });
 
-/* GET specific artist by ID */
+/* GET (render) specific artist by ID */
 router.get('/:id', function(req, res, next) {
   // Render the artist's page (wall) here
 })
