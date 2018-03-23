@@ -4,12 +4,17 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var handlebars = require('express-handlebars');
 
 var index = require('./routes/index');
 var artists = require('./routes/artists');
 var art = require('./routes/art');
 
 var app = express();
+
+
+app.engine('handlebars', handlebars({defaultLayout: 'main', layoutsDir: __dirname + '/views'}));
+app.set('view engine', 'handlebars');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -19,6 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Routes
 app.use('/', index);
 app.use('/artists', artists);
 
@@ -28,5 +34,10 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
+port = 3000
+app.listen(port, function(){
+  console.log('Listening on port ' + 3000);
+})
 
 module.exports = app;
