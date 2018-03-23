@@ -1,10 +1,12 @@
 // Handles artist authentication
 
-var passport = require('passport-local');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy
 var db = require("./database");
+var connect = require('connect-ensure-login');
 
 passport.use(new LocalStrategy((username, password, done) => {
-    db.query('SELECT username, password, FROM Artist_Wall WHERE username=$1', [username], (err, result) => {
+    db.query('SELECT * FROM Artist_Wall WHERE username=$1', [username], (err, result) => {
         if (err) {
             console.error('User not found', err);
             return done(err)
@@ -29,7 +31,7 @@ passport.serializeUser((artist, done) => {
 });
 
 passport.deserializeUser((username, done) => {
-    db.query('SELECT username FROM Artist_Wall WHERE id = $1', [username], (err, results) => {
+    db.query('SELECT * FROM Artist_Wall WHERE username = $1', [username], (err, results) => {
         if (err) {
             console.error('Error when deserializing user', err);
             return done(err);
@@ -37,3 +39,7 @@ passport.deserializeUser((username, done) => {
         done(null, results.rows[0]);
     })
 })
+
+passport.ensureLoggedIn = connect.ensureLoggedIn;
+
+module.exports = passport;
