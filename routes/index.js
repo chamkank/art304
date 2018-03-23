@@ -8,7 +8,11 @@ router.use(passport.session());
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('home');
+  if (req.user){
+    res.render('profile', { user : req.user });
+  } else {
+    res.render('home');
+  }
 });
 
 /* GET login page */
