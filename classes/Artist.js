@@ -28,4 +28,10 @@ artist.postComment = function (artId, artist_username, commentString){
 
 }
 
+artist.deleteComment = function (commentId){
+	database.query("DELETE FROM comment WHERE comment_id = ${commentId}", (err, res) => {
+		console.log(res.rows[0]);
+	})
+}
+
 module.exports = artist;
