@@ -5,3 +5,7 @@
     <input type="password" name="password" placeholder="Enter password">
     <input type="submit" value="Submit">
 </form>
+
+{{#if failed }}
+    <b><p style="color: red;">Login failed, please try again.</p></b>
+{{/if}}

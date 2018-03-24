@@ -15,13 +15,21 @@ router.get('/', function (req, res, next) {
   }
 });
 
+router.get('/loginfailed', function(req, res){
+  res.render('login', { failed : true })
+});
+
 /* GET login page */
 router.get('/login', function(req, res) {
   res.render('login');
 });
 
 /* POST login page (used to login) */
-router.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
+router.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/loginfailed' }));
+
+/* POST login page (used to login from failed login page) */
+router.post('/loginfailed', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/loginfailed' }));
+
 
 /* GET profile page (requires that user is logged in) */
 router.get('/profile',
