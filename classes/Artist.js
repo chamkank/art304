@@ -2,6 +2,7 @@ var db = require('../database');
 
 artist = {};
 
+//Generates a random 20 digit id
 function makeid() {
   var text = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -14,7 +15,9 @@ function makeid() {
 
 artist.postComment = function (artId, artist_username, commentString){
 	var commentId = makeid();
-	var date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+	var utcDate = new Date(date.toUTCString()); //Get time in UTC
+	utcDate.setHours(utcDate.getHours()-7);	//Change to PST with current daylight savings
+	var date = new Date(utcDate).toISOString().slice(0, 19).replace('T', ' '); //Formats date
 	
 	database.query("INSERT INTO Comment(comment_id,artist_username,date_posted,comment_text) VALUES (${commentId},${artist_username}, ${date}, ${commentString})", (err, res) => {
 		console.log(res.rows[0]);
