@@ -15,9 +15,9 @@ function makeid() {
 
 artist.postComment = function (artId, artist_username, commentString){
 	var commentId = makeid();
-	var date = new Date().toLocaleString();
+	var datetime = new Date().toLocaleString();
 
-	database.query("INSERT INTO Comment(comment_id,artist_username,date_posted,comment_text) VALUES (${commentId},${artist_username}, ${date}, ${commentString})", (err, res) => {
+	database.query("INSERT INTO Comment(comment_id,artist_username,date_posted,comment_text) VALUES (${commentId},${artist_username}, ${datetime}, ${commentString})", (err, res) => {
 		console.log(res.rows[0]);
 	})
 	database.query("INSERT INTO Comments_On(comment_id,artist_username,art_id) VALUES (${commentId}, ${artist_username},${artId}) ", (err, res) => {
@@ -35,6 +35,14 @@ artist.deleteComment = function (commentId){
 artist.getArt = function (username){
 	database.query("SELECT * FROM Art WHERE owner_username = ${username}}", (err, res) => {
 		console.log(res.rows[0]);
+	})
+}
+
+artist.createArtist = function(username, password, email_address, birth_date){
+	var datetime = new Date().toLocaleString();
+	database.query("INSERT INTO Artist_Wall(username, password, email_address, date_joined, birth_date) VALUES (${artist_username}, ${password}, ${email_address}, ${datetime}, ${birth_date})", (err, res) => {
+		if (err) { return false; }
+		return true;
 	})
 }
 
