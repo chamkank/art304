@@ -34,4 +34,10 @@ artist.deleteComment = function (commentId){
 	})
 }
 
+artist.getArt = function (username){
+	database.query("SELECT * FROM Art WHERE owner_username = ${username}}", (err, res) => {
+		console.log(res.rows[0]);
+	})
+}
+
 module.exports = artist;
