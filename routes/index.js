@@ -18,7 +18,7 @@ router.get('/', function (req, res, next) {
 /* GET login page */
 router.get('/login', function(req, res) {
   res.render('login');
-})
+});
 
 /* POST login page (used to login) */
 router.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
