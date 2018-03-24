@@ -22,14 +22,14 @@ artist.postComment = function (artId, artist_username, commentString){
 	database.query("INSERT INTO Comment(comment_id,artist_username,date_posted,comment_text) VALUES (${commentId},${artist_username}, ${date}, ${commentString})", (err, res) => {
 		console.log(res.rows[0]);
 	})
-	database.query("INSERT INTO On(comment_id,artist_username,art_id) VALUES (${commentId}, ${artist_username},${artId}) ", (err, res) => {
+	database.query("INSERT INTO Comments_On(comment_id,artist_username,art_id) VALUES (${commentId}, ${artist_username},${artId}) ", (err, res) => {
 		console.log(res.rows[0]);
 	})
 
 }
 
 artist.deleteComment = function (commentId){
-	database.query("DELETE FROM comment WHERE comment_id = ${commentId}", (err, res) => {
+	database.query("DELETE FROM Comment WHERE comment_id = ${commentId}", (err, res) => {
 		console.log(res.rows[0]);
 	})
 }
