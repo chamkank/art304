@@ -15,10 +15,8 @@ function makeid() {
 
 artist.postComment = function (artId, artist_username, commentString){
 	var commentId = makeid();
-	var utcDate = new Date(date.toUTCString()); //Get time in UTC
-	utcDate.setHours(utcDate.getHours()-7);	//Change to PST with current daylight savings
-	var date = new Date(utcDate).toISOString().slice(0, 19).replace('T', ' '); //Formats date
-	
+	var date = new Date().toLocaleString();
+
 	database.query("INSERT INTO Comment(comment_id,artist_username,date_posted,comment_text) VALUES (${commentId},${artist_username}, ${date}, ${commentString})", (err, res) => {
 		console.log(res.rows[0]);
 	})
