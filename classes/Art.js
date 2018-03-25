@@ -7,6 +7,8 @@ art.getComments = function (art_id){
 		console.log(res.rows);
 		return res.rows;
 	})
-}
+};
+
+a
 
 module.exports = art;
