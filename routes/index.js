@@ -32,7 +32,7 @@ router.post('/loginfailed', passport.authenticate('local', { successReturnToOrRe
 
 router.get('/signup', function(req, res){
   res.render('signup');
-})
+});
 
 /* GET profile page (requires that user is logged in) */
 router.get('/profile',
@@ -43,6 +43,6 @@ router.get('/profile',
 
 router.get('/art', function(req, res){
   res.render('upload');
-})
+});
 
 module.exports = router;

@@ -34,6 +34,7 @@ app.use(require('express-session')({ secret: config.get('passport.secret'), resa
 // Routes
 app.use('/', index);
 app.use('/artists', artists);
+app.use('/art', art);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
