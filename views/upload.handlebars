@@ -1,1 +1,29 @@
-<h1>Select Files</h1>
+
+
+<form role = "form"
+      enctype = "multipart/form-data" method = "post"
+      action = "/art">
+
+    <div>
+        <label for="fieldArt"> Select File </label>
+        <input type="file" required accept="image/*" id="fieldArt" name="art">
+    </div>
+
+    <div>
+        <label for="fieldTitle"> Title </label>
+        <input type="text" required id="fieldTitle" name="title">
+    </div>
+
+    <div>
+        <label for="fieldDescription"> Description </label>
+        <input type="text" required id="fieldDescription" name="description">
+    </div>
+
+    <div>
+        <label for="fieldTags"> Tags </label>
+        <input type="text" required id="fieldTags" name="tags">
+    </div>
+
+    {{! Need to add content rating field with buttons fieldset }}
+
+</form>

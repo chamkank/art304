@@ -41,5 +41,8 @@ router.get('/profile',
     res.render('profile', { user : req.user });
   });
 
+router.get('/art', function(req, res){
+  res.render('upload');
+})
 
 module.exports = router;
