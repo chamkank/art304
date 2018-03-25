@@ -57,7 +57,7 @@ artist.createArtist = function (username, password, email_address, birth_date) {
 			}
 		})
 	});
-}
+};
 
 artist.getFollowers = function (username) {
     return new Promise(function(resolve, reject){
@@ -67,7 +67,6 @@ artist.getFollowers = function (username) {
         });
     })
 };
-
 
 
 
