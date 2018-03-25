@@ -1,0 +1,17 @@
+<h1>Sign up page</h1>
+
+<form action="/artists" method="post">
+    Username: <input type="text" name="username" placeholder="Enter username" required>
+    <br>
+    Password: <input type="password" name="password" placeholder="Enter password" required>
+    <br>
+    Email: <input type="email" name="email_address" placeholder="Enter email address" required>
+    <br>
+    Birth date: <input type="date" name="birth_date" required>
+    <br>
+    <input type="submit" value="Submit">
+</form>
+
+{{#if failed }}
+    <b><p style="color: red;">Sign up failed, please try again.</p></b>
+{{/if}}

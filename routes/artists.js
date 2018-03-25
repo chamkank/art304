@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var artist = require('../classes/Artist');
 
 /* GET (render) artists listing. */
 router.get('/', function(req, res, next) {
@@ -15,6 +16,18 @@ router.get('/:id', function(req, res, next) {
 router.post('/', function(req, res, next) {
   // Call function to create new artist
   // Reroute user to their wall
+  req = req.body;
+  state = res
+  createArtist = artist.createArtist(req.username, req.password, req.email_address, req.birth_date)
+  createArtist.then(function (res) {
+    if (res) {
+        console.log('Successfully added user!');
+        state.redirect('/login');
+    }
+  }).catch(function (err) {
+      console.log(err);
+      state.render('signup', { failed : true });
+  });
 })
 
 /* DELETE an artist by ID */ 
