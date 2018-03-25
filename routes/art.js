@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var formidable = require('formidable');
+var fs = require('fs');
+var path = require('path');
 
 // GET (render) art by ID
 router.get('/:id', function(req, res, next){
@@ -18,13 +20,14 @@ router.post('/', function(req, res, next){
     // Call function create art
     // Redirect user to that art
     var form = new formidable.IncomingForm();
+    form.uploadDir = path.join(path.dirname(__dirname),'art');
     form.parse(req, function(err, fields, files){
         if(err)
             return res.redirect('/art');
 
         console.log("FIELDS:");
         console.log(fields);
-        console.log('FILES:');
+        console.log("FILES:");
         console.log(files);
 
         res.redirect('/art');
