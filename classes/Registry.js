@@ -1,4 +1,4 @@
-var db = requre('../database');
+var db = require('../database');
 
 registry = {};
 

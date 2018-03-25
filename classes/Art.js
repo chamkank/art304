@@ -9,6 +9,6 @@ art.getComments = function (art_id){
 	})
 };
 
-a
+
 
 module.exports = art;
