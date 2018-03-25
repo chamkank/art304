@@ -61,7 +61,7 @@ artist.createArtist = function (username, password, email_address, birth_date) {
 
 artist.getFollowers = function (username) {
     return new Promise(function(resolve, reject){
-        database.query(`SELECT follower_username FROM Follows WHERE followee_username = '${username}'`, (err, res) => {
+        database.query(`SELECT * FROM Artist_Wall WHERE Artist_Wall.username IN (SELECT follower_username from Follows WHERE followee_username = '${username}')`, (err, res) => {
             if (err){ reject(err.detail) }
             else { resolve(res.rows) }
         });

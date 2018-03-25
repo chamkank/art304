@@ -1,4 +1,5 @@
 var db = require('../database');
+var tag = require('./Tag');
 
 art = {};
 
@@ -8,6 +9,26 @@ art.getComments = function (art_id){
 		return res.rows;
 	})
 };
+
+
+art.updateTag = function (art_id, tag_name){
+
+
+    return new Promise(function (resolve, reject) {
+        db.query(`INSERT INTO Tag(tag_name) VALUES ('${tag_name}') ON CONFLICT (tag_name) DO NOTHING`, (err, res) => {
+            if (err) { reject(err.detail) }
+            db.query(`INSERT INTO Has(art_id, tag_name) VALUES ('${art_id}', '${tag_name}', ON CONFLICT (art_id, tag_name) DO NOTHING)`, (err, res) => {
+                if (err) { reject(err.detail) }
+                else { resolve(true) }
+            });
+        });
+    });
+
+
+
+};
+
+
 
 
 

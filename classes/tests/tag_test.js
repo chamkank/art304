@@ -1,7 +1,7 @@
 var tag = require('../tag');
 
 
-var tagName = 'Patrickonian Era';
+var tagName = 'Patrick Fan Club';
 
 var createTag = tag.createTag(tagName);
 
@@ -12,7 +12,9 @@ createTag.then(function (res) {
 }).catch(function (err) {
     console.log(err);
 });
-/*
+
+
+
 var getArt = tag.getArt('painting');
 
 
@@ -26,4 +28,4 @@ getArt.then(function (res) {
 }).catch(function (err) {
     console.log(err);
 });
-*/
+

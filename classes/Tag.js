@@ -5,7 +5,7 @@ tag = {};
 
 tag.createTag = function (tag_name) {
     return new Promise(function (resolve, reject) {
-        database.query(`INSERT INTO Tag(tag_name) VALUES ('${tag_name}')`, (err, res) => {
+        database.query(`INSERT INTO Tag(tag_name) VALUES ('${tag_name}') ON CONFLICT (tag_name) DO NOTHING`, (err, res) => {
             if (err) {
                 reject(err.detail);
             } else {
