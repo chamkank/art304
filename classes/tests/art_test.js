@@ -3,7 +3,7 @@ var tag = require('../Art');
 
 
 
-var updateTag = art.updateTag('Ol3WGWBPyU5hRQ1N6NyO', 'Super Pat');
+var updateTag = art.updateTag('i071PlEHxgpsGknfrqUY', 'Super Pat');
 
 
 

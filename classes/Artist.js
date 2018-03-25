@@ -26,7 +26,7 @@ artist.postComment = function (artId, artist_username, commentString) {
 			});
 		});
 	});
-}
+};
 
 artist.deleteComment = function (commentId) {
 	return new Promise(function (resolve, reject) {
