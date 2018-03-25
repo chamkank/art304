@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var artist = require('../classes/Artist');
 
-/* GET (render) artists listing. */
+/*  (render) artists listing. */
 router.get('/', function(req, res, next) {
   // Render the list of artists here.
 });
