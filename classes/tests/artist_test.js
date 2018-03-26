@@ -27,3 +27,15 @@ getFollowers.then(function (res) {
 }).catch(function (err) {
     console.log(err);
 });
+
+var getInfo = artist.getInfo('jo');
+
+getInfo.then(function (res) {
+    if (res) {
+
+        console.log('Successfully got info: ');
+        console.log(res);
+    }
+}).catch(function (err) {
+    console.log(err);
+});

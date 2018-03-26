@@ -68,6 +68,15 @@ artist.getFollowers = function (username) {
     })
 };
 
+artist.getInfo = function (username) {
+    return new Promise(function(resolve, reject){
+        database.query(`SELECT * FROM Artist_Wall WHERE Artist_Wall.username = '${username}'`, (err, res) => {
+            if (err){ reject(err.detail) }
+            else { resolve(res.rows) }
+        });
+    })
+};
+
 
 
 
