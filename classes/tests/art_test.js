@@ -16,3 +16,15 @@ updateTag.then(function (res) {
 }).catch(function (err) {
     console.log(err);
 });
+
+var getComments = art.getComments('i071PlEHxgpsGknfrqUY');
+
+getComments.then(function (res) {
+    if (res) {
+
+        console.log('Successfully got comment info: ');
+        console.log(res);
+    }
+}).catch(function (err) {
+    console.log(err);
+});
