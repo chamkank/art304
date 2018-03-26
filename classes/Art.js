@@ -3,6 +3,17 @@ var db = require('../database');
 
 art = {};
 
+//Generates a random 20 digit id
+function makeid() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 20; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
 art.getComments = function (art_id){
 	    return new Promise(function (resolve, reject) {
         db.query(`SELECT * FROM Comment, Comments_On WHERE Comments_On.comment_id = Comment.comment_id AND Comments_On.art_id = '${art_id}' ORDER BY date_posted`, (err, res) => {

@@ -5,17 +5,6 @@ var path = require('path');
 var fs = require('fs');
 var art = require('../classes/Art');
 
-//Generates a random 20 digit id
-function makeid() {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for (var i = 0; i < 20; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text;
-}
-
 // GET (render) art by ID
 router.get('/:id', function(req, res, next){
     // Render a piece of art here
