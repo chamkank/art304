@@ -1,2 +1,16 @@
-<h1> List of Artists: {{#each artists}}<p>{{username}}</p>{{/each}} </h1>
+<h1> List of Artists:</h1>
+
+
+<h2>
+    {{#each artists}}
+    <ul>
+        <li>
+            <a href = /artist/{{username}}>{{username}}</a>
+        </li>
+    </ul>
+    {{/each}}
+</h2>
+
+
+
 

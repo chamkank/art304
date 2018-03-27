@@ -52,8 +52,5 @@ router.get('/art',
           res.render('login');
     });
 
-router.get('/listOfArtists', function(req, res){
-  res.render('listOfArtists')
-});
 
 module.exports = router;

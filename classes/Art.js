@@ -41,7 +41,12 @@ art.postArt = function (username, imgLocation, title, description, content_ratin
 };
 
 art.getInfo = function (art_id){
-
+    return new Promise(function(resolve, reject){
+        db.query(`SELECT * FROM Art WHERE art_id = '${art_id}'`, (err, res) => {
+            if (err){ reject(err.detail) }
+            else {resolve(res.rows) }
+        });
+    })
 };
 
 art.getTags = function (art_id){
