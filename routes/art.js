@@ -20,6 +20,8 @@ router.delete('/:id', function(req, res, next){
 router.post('/', function(req, res, next){
     // Call function create art
     // Redirect user to that art
+    var user = req.session.passport.user;
+    //console.log(user);
     var form = new formidable.IncomingForm();
     var artDirectory = path.join(path.dirname(__dirname),'art');
     form.uploadDir = artDirectory;
@@ -41,17 +43,17 @@ router.post('/', function(req, res, next){
         var filePathUpdate = "art\\\\"+fileName;
         fs.renameSync(files.art.path,filePathUpdate);
         var imgLocation = fileName;
-
+        var state = res;
         // TODO: Complete implementation
         // Adding tags needs to be taken care of seperately
         // Using jo as a place holder; need to use actual user
         // res.redirect throws an error
         // database needs to allows more chars form image location path; currently storing image name
         // found in art directory of the root
-        art.postArt("jo", imgLocation, fields.title, fields.description, fields.rating).then(function (res) {
+        art.postArt(user, imgLocation, fields.title, fields.description, fields.rating).then(function (res) {
             if (res) {
                 console.log('Art added succesfully');
-                res.redirect('/art');
+                state.redirect('/art');
             }
         }).catch(function (err) {
             console.log("there is an error");

@@ -40,6 +40,14 @@ art.postArt = function (username, imgLocation, title, description, content_ratin
 	});
 };
 
+art.getInfo = function (art_id){
+
+};
+
+art.getTags = function (art_id){
+
+};
+
 art.updateTag = function (art_id, tag_name){
 
     return new Promise(function (resolve, reject) {

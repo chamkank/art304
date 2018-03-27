@@ -41,8 +41,13 @@ router.get('/profile',
     res.render('profile', { user : req.user });
   });
 
-router.get('/art', function(req, res){
-  res.render('upload');
-});
+router.get('/art',
+    passport.ensureLoggedIn(),
+    function (req, res) {
+        if(req.user)
+          res.render('upload');
+        else
+          res.render('login');
+    });
 
 module.exports = router;
