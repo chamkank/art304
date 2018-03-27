@@ -3,6 +3,8 @@ var router = express.Router();
 var passport = require('../passport');
 var config = require('config');
 
+
+
 router.use(passport.initialize());
 router.use(passport.session());
 
@@ -49,5 +51,9 @@ router.get('/art',
         else
           res.render('login');
     });
+
+router.get('/listOfArtists', function(req, res){
+  res.render('listOfArtists')
+});
 
 module.exports = router;

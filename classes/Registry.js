@@ -26,7 +26,9 @@ registry.getArt = () => {
     })
 };
 
+
 // returns all artists in database
+
 registry.getArtists = () => {
     return new Promise(function (resolve, reject) {
         db.query("SELECT * from Artist_Wall", (err, res) => {
@@ -35,8 +37,10 @@ registry.getArtists = () => {
             }
             resolve(res.rows);
         })
+
     })
 };
+
 
 // returns all comments in database
 registry.getComments = () => {

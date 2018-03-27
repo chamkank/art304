@@ -1,4 +1,4 @@
-var tag = require('../Art');
+var art = require('../Art');
 
 
 

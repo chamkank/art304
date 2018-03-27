@@ -39,3 +39,4 @@ getInfo.then(function (res) {
 }).catch(function (err) {
     console.log(err);
 });
+

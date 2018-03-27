@@ -1,10 +1,22 @@
 var express = require('express');
 var router = express.Router();
 var artist = require('../classes/Artist');
+var registry = require('../classes/Registry');
 
 /*  (render) artists listing. */
 router.get('/', function(req, res, next) {
   // Render the list of artists here.
+    state = res;
+    var allArtists = registry.getArtists();
+    allArtists.then(function(res){
+        if(res){
+            console.log("Successfully retrieved artists!");
+            state.render('artists', {artists : res}); //should be template
+        }
+    }).catch(function(err){
+        console.log(err);
+        state.redirect('/home')
+    })
 });
 
 /* GET (render) specific artist by ID */
