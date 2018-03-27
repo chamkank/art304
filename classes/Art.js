@@ -4,6 +4,7 @@ var db = require('../database');
 art = {};
 
 //Generates a random 20 digit id
+// Attribution: https://stackoverflow.com/a/1349426
 function makeid() {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
