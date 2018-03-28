@@ -81,10 +81,11 @@ router.post('/', function(req, res, next){
         var state = res;
         // TODO: Complete implementation
         // Adding tags needs to be taken care of seperately
-        // Using jo as a place holder; need to use actual user
+        // Using jo as a place holder; need to use actual user (done?)
         // res.redirect throws an error
         // database needs to allows more chars form image location path; currently storing image name
         // found in art directory of the root
+        // need two different pages for succesful and not succesful adding of art
         art.postArt(user, imgLocation, fields.title, fields.description, fields.rating).then(function (res) {
             if (res) {
                 console.log('Art added succesfully');
