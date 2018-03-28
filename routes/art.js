@@ -30,14 +30,12 @@ router.get('/:id', function(req, res, next){
             }
             owner = false;
             if (req.user && req.user.username == art_info.owner_username){
+                requser = req.user;
                 if (req.user.username){
                     artist.hasLiked(req.user.username, art_id).then((res)=>{
                         if (res == true){
-                            return state.render('art', { art_info : art_info, comments : comments, owner : owner, user : req.user, liked : true})
+                            return state.render('art', { art_info : art_info, comments : comments, owner : owner, user : requser, liked : true})
                         }
-                    }, (err)=>{ 
-                        console.log(err);
-                        return state.render('error');
                     })
                 }
                 owner = true;
