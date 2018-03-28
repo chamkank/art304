@@ -18,7 +18,7 @@ router.get('/:id', function(req, res, next){
     art_info = {};
     comments = {};
     state = res;
-    art.getInfo(art_id).then((res)=>{;
+    art.getInfo(art_id).then((res)=>{
         art_info = res;
     }, (err)=>{
         console.log(err);
@@ -53,10 +53,27 @@ router.get('/:id', function(req, res, next){
 })
 
 // DELETE art by ID
-router.delete('/:id', function(req, res, next){
+router.post('/:id/delete', passport.ensureLoggedIn(), function(req, res, next){
     // Call function to delete a piece of art by its ID
     // Redirect user to their wall
-    var art_id = req.params.id;
+	state = res;
+    art_id = req.params.id;
+	art_info = {};
+	art.getInfo(art_id).then((res)=>{
+        art_info = res;
+		if(art_info.owner_username == req.user.username){
+			art.delete(art_id).then((res)=>{
+				state.redirect('/artist/'+req.user.username);
+			},  (err)=>{
+				console.log(err);
+			});
+		}
+		else{
+			state.render('unauthorized');
+		}
+    }, (err)=>{
+        console.log(err);
+    });
 });
 
 // POST art
