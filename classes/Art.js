@@ -45,7 +45,7 @@ art.getInfo = function (art_id){
     return new Promise(function(resolve, reject){
         db.query(`SELECT * FROM Art WHERE art_id = '${art_id}'`, (err, res) => {
             if (err){ reject(err.detail) }
-            else {resolve(res.rows) }
+            else {resolve(res.rows[0]) }
         });
     })
 };
