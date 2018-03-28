@@ -17,7 +17,7 @@ router.get('/:id', function(req, res, next){
     art_info = {};
     comments = {};
     state = res;
-    art.getInfo(art_id).then((res)=>{;
+    art.getInfo(art_id).then((res)=>{
         art_info = res;
     }, (err)=>{
         console.log(err);
@@ -30,24 +30,22 @@ router.get('/:id', function(req, res, next){
             }
             owner = false;
             if (req.user && req.user.username == art_info.owner_username){
-                requser = req.user;
                 if (req.user.username){
-                    artist.hasLiked(req.user.username, art_id).then((res)=>{
-                        if (res == true){
-                            return state.render('art', { art_info : art_info, comments : comments, owner : owner, user : requser, liked : true})
+                    artist.hasLiked(req.user.username, art_id).then((res)=>{            
+                        if (Object.keys(art_info).length == 0){
+                            return state.render('404');
+                        } else {
+                            return state.render('art', { art_info : art_info, comments : comments, owner : owner, user : req.user, liked : res})
                         }
+                    }, (err) => {
+                        return state.render('error');
                     })
                 }
                 owner = true;
             }
-            if (Object.keys(art_info).length == 0){
-                return state.render('404');
-            } else {
-                return state.render('art', { art_info : art_info, comments : comments, owner : owner, user : req.user})
-            }
         },(err)=>{
             return state.render('404');
-        });
+        })
     })
 })
 
@@ -123,8 +121,12 @@ router.post('/:id/comment', passport.ensureLoggedIn(), function(req, res, next){
 
 /* Request to like/unlike art */
 router.post('/:id/like', passport.ensureLoggedIn(), function(req, res, next){
-    // state = res
-
+    state = res;
+    artist.likeArt(req.user.username, req.body.art_id).then((res)=>{
+        state.redirect('/art/'+req.body.art_id); // refresh page
+    }, (err)=>{
+        console.log(err);
+    })
 })
 
 module.exports = router;

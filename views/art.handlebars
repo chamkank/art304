@@ -1,15 +1,24 @@
 <div id="art" style="margin: 0 auto; display: table; padding-top: 20px; width: 25em;">
     <div style="display: inline;">
-    <form name="like_art" action="/art/{{art_info.art_id}}/delete" method="POST" style="display: inline;"></form>
-    <button type="submit" form="like_art" class="btn btn-primary" value="DELETE">
-    {{#if liked}}Unlike{{else}}Like{{/if}}
-    </button>
-    {{#if owner}}
-    <form name="del_art" action="/art/{{art_info.art_id}}/delete" method="POST" style="display: inline;"></form>
-    <button type="submit" form="del_art" class="btn btn-danger" value="DELETE">Delete art</button>
-    {{/if}}
+        {{#if user}}
+        <form name="like_art" action="/art/{{art_info.art_id}}/like" method="POST" style="display: inline;">
+                <input type="hidden" name="art_id" value="{{art_info.art_id}}">
+                {{#if liked}}
+                    <input type="submit" value="Unlike" class="btn btn-primary">
+                {{else}}
+                    <input type="submit" value="Like" class="btn btn-primary">
+                {{/if}}
+        </form>
+        </button>
+        {{/if}} 
+        {{#if owner}}
+        <form name="del_art" action="/art/{{art_info.art_id}}/delete" method="POST" style="display: inline;">
+            <input type="hidden" name="art_id" value="{{art_info.art_id}}">
+        </form>
+        <button type="submit" form="del_art" class="btn btn-danger" value="DELETE">Delete art</button>
+        {{/if}}
     </div>
-    
+
     <div class="card">
         <img class="card-img-top" src="/public/art/{{art_info.img_location}}" style="max-width: 25em;">
         <div class="card-body">

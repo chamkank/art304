@@ -80,7 +80,7 @@ artist.getInfo = function (username) {
 
 artist.hasLiked = function (username, art_id){
 	return new Promise(function(resolve, reject){
-		database.query(`SELECT * FROM Likes WHERE username = '${req.user.username}' and art_id = '${art_id}'`, function(err, res){
+		database.query(`SELECT * FROM Likes WHERE username = '${username}' and art_id = '${art_id}'`, function(err, res){
 			if (err) { reject(err.detail) }
 			else { 
 				if (res.rows.length == 0){
