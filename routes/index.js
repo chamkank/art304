@@ -66,7 +66,7 @@ router.get('/stats', function(req, res){
 	//calc variable here vartocalc
 	var state = res;
 	// Average number of likes per tagged art
-	db.query(`SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name, num_likes`, (err, res) => {
+	db.query(`SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name`, (err, res) => {
 		if (err) {
 			console.log(err);
 		}
@@ -96,14 +96,19 @@ router.get('/stats', function(req, res){
 						}
 						artistCount = res.rows;
 						// The most popular tag has this many likes on average (nested aggregation)
-						db.query(`SELECT MAX(foo.avg_num_likes) FROM (SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name, num_likes) as foo`, (err, res) => {
+						db.query(`SELECT MAX(foo.avg_num_likes) FROM (SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name) as foo`, (err, res) => {
 							if (err) {
 								console.log(err);
 							}
 							avgLikesPopularTag = res.rows;
-							console.log(avgLikesPerTaggedArt);
-							console.log(tagCount);
-							state.render('stats', {avgLikesPerTaggedArt : avgLikesPerTaggedArt, artTagCount : artTagCount, tagCount : tagCount, artCount : artCount, artistCount : artistCount, avgLikesPopularTag : avgLikesPopularTag});
+							db.query(`SELECT MIN(foo.avg_num_likes) FROM (SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name) as foo`, (err, res) => {
+								if (err) {
+									console.log(err);
+								}
+								avgLikesUnlikedTag = res.rows;
+								console.log(artCount);
+								state.render('stats', {avgLikesPerTaggedArt : avgLikesPerTaggedArt, artTagCount : artTagCount, tagCount : tagCount, artCount : artCount, artistCount : artistCount, avgLikesPopularTag : avgLikesPopularTag, avgLikesUnlikedTag : avgLikesUnlikedTag});
+							});
 						});
 					});
 				});
