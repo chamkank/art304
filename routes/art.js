@@ -4,16 +4,49 @@ var formidable = require('formidable');
 var path = require('path');
 var fs = require('fs');
 var art = require('../classes/Art');
+var passport = require('../passport')
+
+router.use(passport.initialize());
+router.use(passport.session());
 
 // GET (render) art by ID
 router.get('/:id', function(req, res, next){
-    // Render a piece of art here
+    art_id = req.params.id;
+    art_info = {};
+    comments = {};
+    state = res;
+    art.getInfo(art_id).then((res)=>{
+        art_info = res;
+    }, (err)=>{
+        console.log(err);
+    }).then((res)=>{
+        art.getComments(art_id).then((res)=>{
+            comments = []
+            for (let comment of res){
+                comment.date_posted = comment.date_posted.toLocaleDateString() + ' ' + comment.date_posted.toLocaleTimeString()
+                comments.push(comment);
+            }
+            owner = false;
+            if (req.user && req.user.username == art_info.owner_username){
+                owner = true;
+            }
+            console.log(art_info)
+            if (Object.keys(art_info).length == 0){
+                state.render('404');
+            } else {
+                state.render('art', { art_info : art_info, comments : comments, owner : owner})
+            }
+        },(err)=>{
+            state.render('404');
+        });
+    })
 })
 
 // DELETE art by ID
 router.delete('/:id', function(req, res, next){
     // Call function to delete a piece of art by its ID
     // Redirect user to their wall
+    req.params.id
 })
 
 // POST art

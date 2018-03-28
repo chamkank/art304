@@ -1,0 +1,23 @@
+<div id="art" style="margin: 0 auto; display: table; padding-top: 100px;">
+    {{#if owner}}
+    <form name="del_art" action="/art/{{art_id}}/delete" method="POST"></form>
+    <button type="submit" form="del_art" class="btn btn-danger" value="DELETE">Delete art</button>
+    {{/if}}
+    <div class="card">
+        <img class="card-img-top" src="/public/art/{{art.img_location}}">
+        <div class="card-body">
+            <h5 class="card-title">{{art_info.title}}</h5>
+            <p class="card-text">{{art_info.description}}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            {{#if comments}}
+            <li class="list-group-item"><b>Comments</b></li>
+            {{/if}}
+            {{#each comments}}
+                <li class="list-group-item">
+                    <i>{{comment_text}}</i> - <a href="/artists/{{artist_username}}">{{artist_username}}</a> ({{date_posted}})
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
