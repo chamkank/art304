@@ -39,4 +39,15 @@ getInfo.then(function (res) {
 }).catch(function (err) {
     console.log(err);
 });
+/*
+var likeArt = artist.likeArt('jo','Ol3WGWBPyU5hRQ1N6NyO');
 
+likeArt.then(function (res) {
+    if (res) {
+        console.log('Successfully added the like: ');
+        console.log(res);
+        console.log(res.length);
+    }
+}).catch(function (err) {
+    console.log(err);
+});*/

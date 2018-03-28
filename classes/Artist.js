@@ -75,7 +75,7 @@ artist.getInfo = function (username) {
             if (err){ reject(err.detail) }
             else { resolve(res.rows) }
         });
-    })
+    });
 };
 
 artist.hasLiked = function (username, art_id){
@@ -94,6 +94,33 @@ artist.hasLiked = function (username, art_id){
 }
 
 
+
+artist.likeArt = function(username, art_id){
+    return new Promise(function (resolve, reject) {
+        database.query(`SELECT * FROM likes WHERE art_id = '${art_id}' AND likes.username = '${username}'`, (err, res) => {
+            if (err) {
+            	reject(err.detail)
+            } else if(res.rows.length == 0) {
+                database.query(`INSERT INTO likes(art_id,username) VALUES ('${art_id}','${username}')`, (err2, res2) => {
+                    if (err2) {
+                        reject(err2.detail);
+                    }
+                    else {
+                        resolve(true);
+                    }
+                });
+            } else if(res.rows.length > 0) {
+                database.query(`DELETE FROM likes WHERE art_id = '${art_id}' AND username = '${username}'`, (err3, res3) => {
+                    if (err3){
+                    	reject(err3.detail);
+                    } else {
+                    	resolve(true);
+                    }
+                });
+			}
+        });
+    });
+};
 
 
 module.exports = artist;
