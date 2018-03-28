@@ -4,6 +4,7 @@ var db = require('../database');
 art = {};
 
 //Generates a random 20 digit id
+// Attribution: https://stackoverflow.com/a/1349426
 function makeid() {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -38,6 +39,19 @@ art.postArt = function (username, imgLocation, title, description, content_ratin
             }
         })
 	});
+};
+
+art.getInfo = function (art_id){
+    return new Promise(function(resolve, reject){
+        db.query(`SELECT * FROM Art WHERE art_id = '${art_id}'`, (err, res) => {
+            if (err){ reject(err.detail) }
+            else {resolve(res.rows) }
+        });
+    })
+};
+
+art.getTags = function (art_id){
+
 };
 
 art.updateTag = function (art_id, tag_name){

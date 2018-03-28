@@ -1,0 +1,19 @@
+<h1>Search page</h1>
+
+<form action="/search" method="post">
+    <input type="text" name="tags" placeholder="Enter comma-separated tags">
+</form>
+
+    {{#if results}}
+        {{#each results}}
+        <ul>
+            <li>
+                <a href = /art/{{art_id}}>{{art_id}}</a>
+            </li>
+        </ul>
+        {{/each}}
+    {{else}}
+    <p></p>No results found.</p>
+    {{/if}}
+
+

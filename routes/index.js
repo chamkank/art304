@@ -2,7 +2,11 @@ var express = require('express');
 var router = express.Router();
 var passport = require('../passport');
 var config = require('config');
+
 var db = require('../database');
+
+var search = require('../classes/Search');
+
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -42,9 +46,19 @@ router.get('/profile',
     res.render('profile', { user : req.user });
   });
 
-router.get('/art', function(req, res){
-  res.render('upload');
+router.get('/art',
+    passport.ensureLoggedIn(),
+    function (req, res) {
+        if(req.user)
+          res.render('upload');
+        else
+          res.render('login');
+    });
+
+router.get('/search', function(req, res){
+  res.render('search');
 });
+
 
 //TODO
 /* GET stats page */
@@ -97,5 +111,29 @@ router.get('/stats', function(req, res){
 		});
 	});
 });
+
+router.post('/search', function(req, res){
+  state = res;
+  req = req.body;
+  tags = req.tags;
+  if (tags){
+    all_tags = tags.split(',');
+    temp_tags = [] 
+    for (let tag of all_tags){
+      tag = tag.trim();
+      temp_tags.push(tag);
+    }
+    all_tags = temp_tags;
+    search.getArtByTags(all_tags).then((res)=>{
+      state.render('search', { results : res});
+    }, (err)=>{
+      console.log(err);
+      state.render('search');
+    })
+  } else {
+    state.render('search');
+  }
+})
+
 
 module.exports = router;

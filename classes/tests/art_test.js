@@ -1,4 +1,4 @@
-var tag = require('../Art');
+var art = require('../Art');
 
 
 
@@ -26,5 +26,17 @@ getComments.then(function (res) {
         console.log(res);
     }
 }).catch(function (err) {
+    console.log(err);
+});
+
+var getInfo = art.getInfo('i071PlEHxgpsGknfrqUY');
+
+getInfo.then(function(res){
+    if(res){
+        console.log('Successfully got info');
+        console.log(res);
+    }
+
+}).catch(function(err){
     console.log(err);
 });
