@@ -9,8 +9,28 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" href="\public\taggle.css">
+    <script src="\public\taggle.js"></script>
 </head>
 <body>
+    <header>
+        <nav>
+            <a href="/">Home</a>
+            {{#if user}}
+                <a href="/art">Submit</a>
+            {{/if}}
+            <a href="/search">Search</a>
+            <a href="/artists">Artists</a>
+            <a href="/stats">Stats</a>
+            {{#if user}}
+                {{! signout not yet implemented - remove comment when done }}
+                <a href="/signout">Signout</a>
+            {{else}}
+                <a href="login">Login</a>
+                <a href="signup">Signup</a>
+            {{/if}}
+        </nav>
+    </header>
     {{{body}}}
 
     <!-- Optional JavaScript -->

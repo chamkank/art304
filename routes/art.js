@@ -7,6 +7,7 @@ var art = require('../classes/Art');
 var db_comment = require('../classes/Comment');
 var passport = require('../passport');
 var artist = require('../classes/Artist');
+var taggle = require('taggle');
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -65,7 +66,7 @@ router.post('/', function(req, res, next){
     var user = req.session.passport.user;
     //console.log(user);
     var form = new formidable.IncomingForm();
-    var artDirectory = path.join(path.dirname(__dirname),'art');
+    var artDirectory = path.join(path.dirname(__dirname),'public////art');
     form.uploadDir = artDirectory;
     form.keepExtensions = true;
     form.parse(req, function(err, fields, files){
@@ -78,11 +79,13 @@ router.post('/', function(req, res, next){
         console.log("FILES:");
         console.log(files);
 
+        console.log();
+
         //var imgLocation = JSON.stringify(path.relative(path.dirname(__dirname),files.art.path));
         //console.log(imgLocation);
 
         var fileName = (path.basename(files.art.path)).replace("upload_", "");
-        var filePathUpdate = "art\\\\"+fileName;
+        var filePathUpdate = "public\\\\art\\\\"+fileName;
         fs.renameSync(files.art.path,filePathUpdate);
         var imgLocation = fileName;
         var state = res;
