@@ -51,7 +51,15 @@ art.getInfo = function (art_id){
 };
 
 art.getTags = function (art_id){
-
+    return new Promise(function (resolve, reject){
+        db.query(`SELECT * FROM Has WHERE art_id = '${art_id}'`, (err, res) => {
+            if (err) {
+                reject(err.detail);
+            } else {
+                resolve(res.rows);
+            }
+        });
+    });
 };
 
 art.updateTag = function (art_id, tag_name){

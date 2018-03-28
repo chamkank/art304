@@ -67,3 +67,14 @@ getInfo.then(function(res){
     console.log(err);
 });
 */
+
+/*var getTags = art.getTags('Ol3WGWBPyU5hRQ1N6NyO');
+getTags.then(function (res) {
+    if (res) {
+
+        console.log('Successfully tag info: ');
+        console.log(res);
+    }
+}).catch(function (err) {
+    console.log(err);
+});*/
