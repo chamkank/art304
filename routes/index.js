@@ -2,8 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('../passport');
 var config = require('config');
-
-
+var search = require('../classes/Search');
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -52,5 +51,31 @@ router.get('/art',
           res.render('login');
     });
 
+router.get('/search', function(req, res){
+  res.render('search');
+});
+
+router.post('/search', function(req, res){
+  state = res;
+  req = req.body;
+  tags = req.tags;
+  if (tags){
+    all_tags = tags.split(',');
+    temp_tags = [] 
+    for (let tag of all_tags){
+      tag = tag.trim();
+      temp_tags.push(tag);
+    }
+    all_tags = temp_tags;
+    search.getArtByTags(all_tags).then((res)=>{
+      state.render('search', { results : res});
+    }, (err)=>{
+      console.log(err);
+      state.render('search');
+    })
+  } else {
+    state.render('search');
+  }
+})
 
 module.exports = router;
