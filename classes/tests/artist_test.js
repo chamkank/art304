@@ -5,8 +5,8 @@ password = 'testpass';
 email_address = 'email@email.com';
 birth_date = '2018-05-17';
 
-var createUser = artist.createArtist(username, password, email_address, birth_date);
-
+//var createUser = artist.createArtist(username, password, email_address, birth_date);
+/*
 createUser.then(function (res) {
     if (res) {
 
@@ -27,7 +27,7 @@ getFollowers.then(function (res) {
 }).catch(function (err) {
     console.log(err);
 });
-
+*/
 var getInfo = artist.getInfo('jo');
 
 getInfo.then(function (res) {

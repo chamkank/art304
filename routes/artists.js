@@ -3,9 +3,11 @@ var router = express.Router();
 var artist = require('../classes/Artist');
 var registry = require('../classes/Registry');
 
+
 /*  (render) artists listing. */
 router.get('/', function(req, res, next) {
   // Render the list of artists here.
+
     state = res;
     var allArtists = registry.getArtists();
     allArtists.then(function(res){
@@ -22,23 +24,31 @@ router.get('/', function(req, res, next) {
 /* GET (render) specific artist by ID */
 router.get('/:username', function(req, res, next) {
   // Render the artist's page (wall) here
-    res.render("home")
-    /*
+    var username = req.params.username;
     state = res;
-   // var art = artist.getArt(username);
-     var artist = artist.getInfo();
-     artist.then(function(res){
+/*
+     var artistwall = artist.getInfo(username);
+     artistwall.then(function(res){
          if(res){
              console.log("Successfully got Info");
-             stat.render('artist', {artist : res});
+             console.log(res);
+             var name = res;
+            // state.render('artist', {artist : res});
          }
      }).catch(function(err){
          console.log(err);
-     })*/
+     });*/
 
+    artistArt = artist.getArt(username);
 
-
-})
+    artistArt.then(function(res){
+        console.log("successfully got art");
+        console.log(res);
+        state.render('artist', {art : res});
+    }).catch(function(err){
+        console.log(err);
+    })
+});
 
 /* POST to artists (create new artist) */
 router.post('/', function(req, res, next) {
