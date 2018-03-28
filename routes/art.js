@@ -7,6 +7,7 @@ var art = require('../classes/Art');
 var db_comment = require('../classes/Comment');
 var passport = require('../passport');
 var artist = require('../classes/Artist');
+var taggle = require('taggle');
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -50,10 +51,27 @@ router.get('/:id', function(req, res, next){
 })
 
 // DELETE art by ID
-router.delete('/:id', function(req, res, next){
+router.post('/:id/delete', passport.ensureLoggedIn(), function(req, res, next){
     // Call function to delete a piece of art by its ID
     // Redirect user to their wall
-    var art_id = req.params.id;
+	state = res;
+    art_id = req.params.id;
+	art_info = {};
+	art.getInfo(art_id).then((res)=>{
+        art_info = res;
+		if(art_info.owner_username == req.user.username){
+			art.delete(art_id).then((res)=>{
+				state.redirect('/artist/'+req.user.username);
+			},  (err)=>{
+				console.log(err);
+			});
+		}
+		else{
+			state.render('unauthorized');
+		}
+    }, (err)=>{
+        console.log(err);
+    });
 });
 
 // POST art
@@ -63,7 +81,7 @@ router.post('/', function(req, res, next){
     var user = req.session.passport.user;
     //console.log(user);
     var form = new formidable.IncomingForm();
-    var artDirectory = path.join(path.dirname(__dirname),'art');
+    var artDirectory = path.join(path.dirname(__dirname),'public////art');
     form.uploadDir = artDirectory;
     form.keepExtensions = true;
     form.parse(req, function(err, fields, files){
@@ -76,11 +94,13 @@ router.post('/', function(req, res, next){
         console.log("FILES:");
         console.log(files);
 
+        console.log();
+
         //var imgLocation = JSON.stringify(path.relative(path.dirname(__dirname),files.art.path));
         //console.log(imgLocation);
 
         var fileName = (path.basename(files.art.path)).replace("upload_", "");
-        var filePathUpdate = "art\\\\"+fileName;
+        var filePathUpdate = "public\\\\art\\\\"+fileName;
         fs.renameSync(files.art.path,filePathUpdate);
         var imgLocation = fileName;
         var state = res;

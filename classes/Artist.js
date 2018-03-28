@@ -60,9 +60,9 @@ artist.createArtist = function (username, password, email_address, birth_date) {
 	});
 };
 
-artist.getFollowers = function (username) {
+artist.getFollowees = function (username) {
     return new Promise(function(resolve, reject){
-        database.query(`SELECT * FROM Artist_Wall WHERE Artist_Wall.username IN (SELECT follower_username from Follows WHERE followee_username = '${username}')`, (err, res) => {
+        database.query(`SELECT * FROM Artist_Wall WHERE Artist_Wall.username IN (SELECT followee_username from Follows WHERE follower_username = '${username}')`, (err, res) => {
             if (err){ reject(err.detail) }
             else { resolve(res.rows) }
         });
