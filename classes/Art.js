@@ -51,13 +51,37 @@ art.getInfo = function (art_id){
 };
 
 art.getTags = function (art_id){
-
+    return new Promise(function (resolve, reject){
+        db.query(`SELECT * FROM Has WHERE art_id = '${art_id}'`, (err, res) => {
+            if (err) {
+                reject(err.detail);
+            } else {
+                resolve(res.rows);
+            }
+        });
+    });
 };
 
 art.updateTag = function (art_id, tag_name){
 
     return new Promise(function (resolve, reject) {
         db.query(`INSERT INTO Tag(tag_name) VALUES ('${tag_name}') ON CONFLICT (tag_name) DO NOTHING; INSERT INTO Has(art_id, tag_name) VALUES ('${art_id}', '${tag_name}') ON CONFLICT (art_id, tag_name) DO NOTHING`, (err, res) => {
+            if (err) {
+                reject(err.detail);
+            } else {
+                resolve(true);
+            }
+        })
+    });
+};
+
+art.delete = function(art_id){
+    return new Promise(function (resolve, reject) {
+        var deleteArt = `DELETE FROM Art WHERE Art.art_id = '${art_id}';`;
+        var deleteHas = `DELETE FROM Has WHERE Has.art_id = '${art_id}';`;
+        var deleteComment = `DELETE FROM Comment WHERE EXISTS (SELECT * FROM Comments_On WHERE Comments_On.art_id = '${art_id}' AND Comment.comment_id = Comments_On.comment_id);`;
+        var deleteCommentsOn = `DELETE FROM Comments_On WHERE Comments_On.art_id = '${art_id}';`;
+        db.query(deleteComment + deleteCommentsOn + deleteHas + deleteArt, (err, res) => {
             if (err) {
                 reject(err.detail);
             } else {

@@ -1,10 +1,9 @@
-<h1>cats</h1>
 
-<h2>
+<div class="gallery row">
     {{#each art}}
-       <p> <img src="/public/{{img_location}}" alt="{{title}}" height="150" width="150"></p>
-       /public/{{img_location}}
+    <a class="col-xs-6 col-sm-4" href="/art/{{art_id}}">
+        <img src="/public/{{img_location}}" alt="{{title}}" height="200" width="200">
+    </a>
     {{/each}}
-</h2>
-
+</div>
 
