@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
         }
     }).catch(function(err){
         console.log(err);
-        state.render('404')
+        state.render('error')
     })
 });
 
@@ -30,10 +30,10 @@ router.get('/:username', function(req, res, next) {
     artistArt.then(function(res){
         console.log("successfully got art");
         console.log(res);
-        state.render('artist', {art : res});
+        state.render('artist', {art : res, username : username});
     }).catch(function(err){
         console.log(err);
-        state.render('404')
+        state.render('error')
     })
 });
 
@@ -59,6 +59,23 @@ router.post('/', function(req, res, next) {
 router.delete('/:username', function(req, res, next){
   // Call a function to delete artist
 
+});
+
+router.get('/:username/followees', function(req, res, next){
+    var username = req.params.username;
+    req = req.body;
+    state = res;
+
+    var artistsFollowed = artist.getFollowees(username);
+    artistsFollowed.then(function(res){
+        if(res){
+            console.log("Successfully retrieved followees!");
+            state.render('follow', {artists : res});
+        }
+    }).catch(function(err){
+        console.log(err);
+        state.render('errpr');
+    })
 });
 
 module.exports = router;

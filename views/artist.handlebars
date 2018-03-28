@@ -1,11 +1,16 @@
 
-<h2> <a href = /artists/>See All Artists</a></h2>
-<h2><a href = /upload/>Upload Image</a></h2>
+<h3> <a href = /artists/>See All Artists</a></h3>
+<h3><a href = /upload/>Upload Image</a></h3>
+<h3><a href = '/artists/{{username}}/followees'>Followed Artists</a></h3>
+
+
+
+
 
 <div class="gallery row">
     {{#each art}}
     <a class="col-xs-6 col-sm-4" href="/art/{{art_id}}">
-        <img src="/public/{{img_location}}" alt="{{title}}" height="200" width="200">
+        <img src="/public/art/{{img_location}}" alt="{{title}}" height="200" width="200">
     </a>
     {{/each}}
 </div>
