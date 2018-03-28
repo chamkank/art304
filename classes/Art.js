@@ -67,6 +67,22 @@ art.updateTag = function (art_id, tag_name){
     });
 };
 
+art.delete = function(art_id){
+    return new Promise(function (resolve, reject) {
+        var deleteArt = `DELETE FROM Art WHERE Art.art_id = '${art_id}';`;
+        var deleteHas = `DELETE FROM Has WHERE Has.art_id = '${art_id}';`;
+        var deleteComment = `DELETE FROM Comment WHERE EXISTS (SELECT * FROM Comments_On WHERE Comments_On.art_id = '${art_id}' AND Comment.comment_id = Comments_On.comment_id);`;
+        var deleteCommentsOn = `DELETE FROM Comments_On WHERE Comments_On.art_id = '${art_id}';`;
+        db.query(deleteComment + deleteCommentsOn + deleteHas + deleteArt, (err, res) => {
+            if (err) {
+                reject(err.detail);
+            } else {
+                resolve(true);
+            }
+        })
+    });
+};
+
 
 
 

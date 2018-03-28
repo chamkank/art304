@@ -46,8 +46,8 @@ router.get('/:id', function(req, res, next){
 router.delete('/:id', function(req, res, next){
     // Call function to delete a piece of art by its ID
     // Redirect user to their wall
-    req.params.id
-})
+    var art_id = req.params.id;
+});
 
 // POST art
 router.post('/', function(req, res, next){

@@ -71,6 +71,7 @@ router.post('/', function(req, res, next) {
 /* DELETE an artist by ID */ 
 router.delete('/:username', function(req, res, next){
   // Call a function to delete artist
+
 })
 
 module.exports = router;
