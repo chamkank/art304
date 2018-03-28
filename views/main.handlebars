@@ -25,10 +25,11 @@
             <a href="/stats">Stats</a>
             {{#if user}}
                 {{! signout not yet implemented - remove comment when done }}
+                <a href="/artists/{{user.username}}/followees">Artists Followed</a>
                 <a href="/signout">Signout</a>
             {{else}}
-                <a href="login">Login</a>
-                <a href="signup">Signup</a>
+                <a href="/login">Login</a>
+                <a href="/signup">Signup</a>
             {{/if}}
         </nav>
     </header>
