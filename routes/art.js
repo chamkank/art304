@@ -5,7 +5,8 @@ var path = require('path');
 var fs = require('fs');
 var art = require('../classes/Art');
 var db_comment = require('../classes/Comment');
-var passport = require('../passport')
+var passport = require('../passport');
+var artist = require('../classes/Artist');
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -16,8 +17,7 @@ router.get('/:id', function(req, res, next){
     art_info = {};
     comments = {};
     state = res;
-    art.getInfo(art_id).then((res)=>{
-        console.log(res);
+    art.getInfo(art_id).then((res)=>{;
         art_info = res;
     }, (err)=>{
         console.log(err);
@@ -30,16 +30,25 @@ router.get('/:id', function(req, res, next){
             }
             owner = false;
             if (req.user && req.user.username == art_info.owner_username){
+                if (req.user.username){
+                    artist.hasLiked(req.user.username, art_id).then((res)=>{
+                        if (res == true){
+                            return state.render('art', { art_info : art_info, comments : comments, owner : owner, user : req.user, liked : true})
+                        }
+                    }, (err)=>{ 
+                        console.log(err);
+                        return state.render('error');
+                    })
+                }
                 owner = true;
             }
             if (Object.keys(art_info).length == 0){
-                state.render('404');
+                return state.render('404');
             } else {
-                console.log(art_info.art_id)
-                state.render('art', { art_info : art_info, comments : comments, owner : owner, user : req.user})
+                return state.render('art', { art_info : art_info, comments : comments, owner : owner, user : req.user})
             }
         },(err)=>{
-            state.render('404');
+            return state.render('404');
         });
     })
 })
@@ -111,6 +120,12 @@ router.post('/:id/comment', passport.ensureLoggedIn(), function(req, res, next){
             state.render('unauthorized');
         }
     );
+})
+
+/* Request to like/unlike art */
+router.post('/:id/like', passport.ensureLoggedIn(), function(req, res, next){
+    // state = res
+
 })
 
 module.exports = router;
