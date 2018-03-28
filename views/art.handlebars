@@ -1,23 +1,32 @@
-<div id="art" style="margin: 0 auto; display: table; padding-top: 100px;">
+<div id="art" style="margin: 0 auto; display: table; padding-top: 20px; width: 25em;">
     {{#if owner}}
-    <form name="del_art" action="/art/{{art_id}}/delete" method="POST"></form>
+    <form name="del_art" action="/art/{{art_info.art_id}}/delete" method="POST"></form>
     <button type="submit" form="del_art" class="btn btn-danger" value="DELETE">Delete art</button>
     {{/if}}
     <div class="card">
-        <img class="card-img-top" src="/public/art/{{art.img_location}}">
+        <img class="card-img-top" src="/public/art/{{art_info.img_location}}" style="max-width: 25em;">
         <div class="card-body">
             <h5 class="card-title">{{art_info.title}}</h5>
             <p class="card-text">{{art_info.description}}</p>
         </div>
-        <ul class="list-group list-group-flush">
+        <ul class="list-group list-group-flush" style="overflow:scroll; max-height: 200px;">
             {{#if comments}}
-            <li class="list-group-item"><b>Comments</b></li>
-            {{/if}}
-            {{#each comments}}
-                <li class="list-group-item">
-                    <i>{{comment_text}}</i> - <a href="/artists/{{artist_username}}">{{artist_username}}</a> ({{date_posted}})
-                </li>
+            <li class="list-group-item">
+                <b>Comments</b>
+            </li>
+            {{/if}} {{#each comments}}
+            <li class="list-group-item">
+                <i>{{comment_text}}</i> -
+                <a href="/artists/{{artist_username}}">{{artist_username}}</a> ({{date_posted}})
+            </li>
             {{/each}}
         </ul>
+        {{#if user}}
+        <form action="/art/{{art_info.art_id}}/comment" method="post">
+            <input type="hidden" name="art_id" value="{{art_info.art_id}}">
+            <input type="text" name="comment_text" placeholder="Enter comment" style="width: calc(100% - 70px); box-sizing: border-box;">
+            <input type="submit" value="Submit" style="float: right;">
+        </form>
+        {{/if}}
     </div>
 </div>

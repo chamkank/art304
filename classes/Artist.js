@@ -3,14 +3,15 @@ var database = require('../database');
 artist = {};
 
 //Generates a random 20 digit id
+// Attribution: https://stackoverflow.com/a/1349426
 function makeid() {
-	var text = "";
-	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-	for (var i = 0; i < 20; i++)
-		text += possible.charAt(Math.floor(Math.random() * possible.length));
+    for (var i = 0; i < 20; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-	return text;
+    return text;
 }
 
 artist.postComment = function (artId, artist_username, commentString) {

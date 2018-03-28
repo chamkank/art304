@@ -4,6 +4,7 @@ var formidable = require('formidable');
 var path = require('path');
 var fs = require('fs');
 var art = require('../classes/Art');
+var db_comment = require('../classes/Comment');
 var passport = require('../passport')
 
 router.use(passport.initialize());
@@ -16,6 +17,7 @@ router.get('/:id', function(req, res, next){
     comments = {};
     state = res;
     art.getInfo(art_id).then((res)=>{
+        console.log(res);
         art_info = res;
     }, (err)=>{
         console.log(err);
@@ -30,11 +32,11 @@ router.get('/:id', function(req, res, next){
             if (req.user && req.user.username == art_info.owner_username){
                 owner = true;
             }
-            console.log(art_info)
             if (Object.keys(art_info).length == 0){
                 state.render('404');
             } else {
-                state.render('art', { art_info : art_info, comments : comments, owner : owner})
+                console.log(art_info.art_id)
+                state.render('art', { art_info : art_info, comments : comments, owner : owner, user : req.user})
             }
         },(err)=>{
             state.render('404');
@@ -93,6 +95,22 @@ router.post('/', function(req, res, next){
             res.redirect('/art');
         });
     });
+})
+
+/* Post comment to art */
+router.post('/:id/comment', passport.ensureLoggedIn(), function(req, res, next){
+    state = res
+    comment_text = req.body.comment_text
+    comment_owner = req.user.username;
+    db_comment.postComment(req.params.id, req.user.username, req.body.comment_text).then(
+        (res)=>{    
+            state.redirect('/art/'+req.body.art_id); // refresh page
+        },
+        (err)=>{
+            console.log(err);
+            state.render('unauthorized');
+        }
+    );
 })
 
 module.exports = router;
