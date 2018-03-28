@@ -1,0 +1,16 @@
+
+<h4>Average number of likes per art per tag:</h4>
+
+{{#each avgLikesPerTaggedArt}}
+{{tag_name}} : {{avg_num_likes}}
+<br>
+{{/each}}
+
+
+<h4>Number of different tags</h4>
+
+{{#each tagCount}}
+{{count}}
+<br>
+{{/each}}
+//avgLikesPerTaggedArt : avgLikesPerTaggedArt, artTagCount : artTagCount, tagCount : tagCount, artCount : artCount, artistCount : artistCount
