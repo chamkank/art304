@@ -94,14 +94,14 @@ artist.hasLiked = function (username, art_id){
 }
 
 
-
 artist.likeArt = function(username, art_id){
     return new Promise(function (resolve, reject) {
         database.query(`SELECT * FROM likes WHERE art_id = '${art_id}' AND likes.username = '${username}';`, (err, res) => {
             if (err) {
             	reject(err.detail)
             } else if(res.rows.length == 0) {
-                database.query(`INSERT INTO likes(art_id,username) VALUES ('${art_id}','${username}'); UPDATE Art SET num_likes = num_like + 1 WHERE art_id = '${art_id}';`, (err2, res2) => {
+
+                database.query(`INSERT INTO likes(art_id,username) VALUES ('${art_id}','${username}'); UPDATE Art SET num_likes = num_likes + 1 WHERE art_id = '${art_id}';`, (err2, res2) => {
                     if (err2) {
                         reject(err2.detail);
                     }
@@ -110,7 +110,7 @@ artist.likeArt = function(username, art_id){
                     }
                 });
             } else if(res.rows.length > 0) {
-                database.query(`DELETE FROM likes WHERE art_id = '${art_id}' AND username = '${username}'; UPDATE Art SET num_likes = num_like - 1 WHERE art_id = '${art_id}';`, (err3, res3) => {
+                database.query(`DELETE FROM likes WHERE art_id = '${art_id}' AND username = '${username}'; UPDATE Art SET num_likes = num_likes - 1 WHERE art_id = '${art_id}';`, (err3, res3) => {
                     if (err3){
                     	reject(err3.detail);
                     } else {
@@ -121,8 +121,6 @@ artist.likeArt = function(username, art_id){
         });
     });
 };
-
-
 
 
 module.exports = artist;
