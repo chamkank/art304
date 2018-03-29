@@ -1,7 +1,7 @@
 var pool = require("./database");
 
 let tagString = 'CREATE TABLE IF NOT EXISTS Tag(tag_name char(20) primary key);';
-let artistWallString = 'CREATE TABLE IF NOT EXISTS Artist_Wall(username varchar(20) primary key, password varchar(20), email_address varchar(254), date_joined timestamp, birth_date date);';
+let artistWallString = 'CREATE TABLE IF NOT EXISTS Artist_Wall(username varchar(20) primary key, password varchar(20), email_address varchar(254) unique, date_joined timestamp, birth_date date);';
 let likesString = 'CREATE TABLE IF NOT EXISTS likes(art_id char(20) references Art(art_id) ON DELETE CASCADE ON UPDATE CASCADE, username char(20) references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(art_id, username));';
 let artString = 'CREATE TABLE IF NOT EXISTS Art(art_id char(20) primary key, img_location varchar(40), num_likes int, date_posted timestamp, owner_username varchar(20) references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE , description varchar(100), content_rating varchar(20), title varchar(20));';
 let hasString = 'CREATE TABLE IF NOT EXISTS Has(art_id char(20) references Art(art_id) ON DELETE CASCADE ON UPDATE CASCADE, tag_name char(20) references Tag(tag_name) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(art_id, tag_name));';
