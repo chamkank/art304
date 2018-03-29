@@ -9,7 +9,6 @@
                     <input type="submit" value="Like ({{art_info.num_likes}})" class="btn btn-primary">
                 {{/if}}
         </form>
-        </button>
         {{/if}} 
         {{#if owner}}
         <form name="del_art" action="/art/{{art_info.art_id}}/delete" method="POST" style="display: inline;">
