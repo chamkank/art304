@@ -1,12 +1,12 @@
 var pool = require("./database");
 
 let tagString = 'CREATE TABLE IF NOT EXISTS Tag(tag_name char(20) primary key);';
-let artistWallString = 'CREATE TABLE IF NOT EXISTS Artist_Wall(username varchar(20) primary key, password varchar(20), email_address varchar(254) unique, date_joined timestamp, birth_date date);';
-let likesString = 'CREATE TABLE IF NOT EXISTS likes(art_id char(20) references Art(art_id) ON DELETE CASCADE ON UPDATE CASCADE, username char(20) references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(art_id, username));';
-let artString = 'CREATE TABLE IF NOT EXISTS Art(art_id char(20) primary key, img_location varchar(40), num_likes int, date_posted timestamp, owner_username varchar(20) references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE , description varchar(100), content_rating varchar(20), title varchar(20));';
-let hasString = 'CREATE TABLE IF NOT EXISTS Has(art_id char(20) references Art(art_id) ON DELETE CASCADE ON UPDATE CASCADE, tag_name char(20) references Tag(tag_name) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(art_id, tag_name));';
-let followsString = 'CREATE TABLE IF NOT EXISTS Follows(follower_username char(20) references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE, followee_username char(20) references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(follower_username, followee_username));';
-let commentString = 'CREATE TABLE IF NOT EXISTS Comment(comment_id char(20) primary key,artist_username varchar(20) references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE, art_id varchar(20) references Art(art_id) ON DELETE CASCADE ON UPDATE CASCADE, date_posted timestamp, comment_text varchar(250));';
+let artistWallString = 'CREATE TABLE IF NOT EXISTS Artist_Wall(username varchar(20) primary key, password varchar(20) NOT NULL, email_address varchar(254) unique NOT NULL, date_joined timestamp NOT NULL, birth_date date NOT NULL);';
+let likesString = 'CREATE TABLE IF NOT EXISTS Likes(art_id char(20) references Art(art_id) NOT NULL ON DELETE CASCADE ON UPDATE CASCADE, username char(20) references Artist_Wall(username) NOT NULL ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(art_id, username));';
+let artString = 'CREATE TABLE IF NOT EXISTS Art(art_id char(20) primary key, img_location varchar(40) NOT NULL, num_likes int NOT NULL, date_posted timestamp NOT NULL, owner_username varchar(20) references Artist_Wall(username) NOT NULL ON DELETE CASCADE ON UPDATE CASCADE , description varchar(100) NOT NULL, content_rating varchar(20) NOT NULL, title varchar(20)) NOT NULL;';
+let hasString = 'CREATE TABLE IF NOT EXISTS Has(art_id char(20) references Art(art_id) NOT NULL ON DELETE CASCADE ON UPDATE CASCADE, tag_name char(20) references Tag(tag_name) NOT NULL ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(art_id, tag_name));';
+let followsString = 'CREATE TABLE IF NOT EXISTS Follows(follower_username char(20) references Artist_Wall(username) NOT NULL ON DELETE CASCADE ON UPDATE CASCADE, followee_username char(20) references Artist_Wall(username) NOT NULL ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(follower_username, followee_username));';
+let commentString = 'CREATE TABLE IF NOT EXISTS Comment(comment_id char(20) primary key, artist_username varchar(20) references Artist_Wall(username) NOT NULL ON DELETE CASCADE ON UPDATE CASCADE, art_id varchar(20) references Art(art_id) NOT NULL ON DELETE CASCADE ON UPDATE CASCADE, date_posted timestamp NOT NULL, comment_text varchar(250) NOT NULL);';
 //let commentsOnString = 'CREATE TABLE IF NOT EXISTS Comments_On(comment_id char(20) references Comment(comment_id) ON DELETE CASCADE ON UPDATE CASCADE, artist_username varchar(20) references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE, art_id varchar(20) references Art(art_id) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(comment_id, artist_username, art_id));';
 // added art_id to comment and got rid of comments_on
 
@@ -85,8 +85,6 @@ let hasInsert2 = "INSERT INTO Has(art_id,tag_name) VALUES ('i071PlEHxgpsGknfrqUY
 let hasInsert3 = "INSERT INTO Has(art_id,tag_name) VALUES ('Ol3WGWBPyU5hRQ1N6NyO' ,'cats');";
 let hasInsert4 = "INSERT INTO Has(art_id,tag_name) VALUES ('Ol3WGWBPyU5hRQ1N6NyO' ,'renaissance');";
 let hasInsert5 = "INSERT INTO Has(art_id,tag_name) VALUES ('dvnKPdagczbod4DTB0XG' ,'water colour');";
-
-
 
 
 pool.query(tagString + artistWallString + followsString + artString + commentString + likesString + hasString, (err, res) => {
