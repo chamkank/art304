@@ -4319,7 +4319,7 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 1
+  Exit code: 3221225786
   Command: C:\WINDOWS\system32\cmd.exe
   Arguments: /d /s /c node ./bin/www
   Directory: C:\Users\Patrick\Documents\2017-18 BCS Courses\CPSC 304\art304
