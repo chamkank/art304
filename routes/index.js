@@ -39,6 +39,11 @@ router.post('/login', passport.authenticate('local', { successReturnToOrRedirect
 /* POST login page (used to login from failed login page) */
 router.post('/loginfailed', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/loginfailed' }));
 
+router.get('/signout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
+
 router.get('/signup', function(req, res){
   res.render('signup');
 });
