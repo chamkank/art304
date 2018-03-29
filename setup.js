@@ -37,16 +37,16 @@ let followsInsert5 = "INSERT INTO Follows(follower_username,followee_username) V
 
 let artInsert1 = 'INSERT INTO Art(art_id, img_location, num_likes, date_posted, owner_username,' +
     ' content_rating, title, description) VALUES (\'i071PlEHxgpsGknfrqUY\',' +
-    '\'img/i071PlEHxgpsGknfrqUY.jpg\', 100000, \'2017-05-17 12:0:0.0\', \'jo\', \'E\', \'Apple\', \'Basic food!\');';
+    '\'img/i071PlEHxgpsGknfrqUY.jpg\', 5, \'2017-05-17 12:0:0.0\', \'jo\', \'E\', \'Apple\', \'Basic food!\');';
 
 let artInsert2 = "INSERT INTO Art(art_id, img_location, num_likes, date_posted, owner_username,\n" +
     "    content_rating, title, description) VALUES ('Ol3WGWBPyU5hRQ1N6NyO',\n" +
-    "'img/Ol3WGWBPyU5hRQ1N6NyO.png', 2, '2017-05-09 12:35:0.123', 'jo', 'E', 'Banana', 'My first\n" +
+    "'img/Ol3WGWBPyU5hRQ1N6NyO.png', 0, '2017-05-09 12:35:0.123', 'jo', 'E', 'Banana', 'My first\n" +
     "painting');";
 
 let artInsert3 = "INSERT INTO Art(art_id, img_location, num_likes, date_posted, owner_username,\n" +
     "    content_rating, title, description) VALUES ('dvnKPdagczbod4DTB0XG',\n" +
-    "'img/dvnKPdagczbod4DTB0XG.png', 1, '2018-01-08 12:35:29.0', 'jo', 'E', 'Coconut', 'Inspired by\n" +
+    "'img/dvnKPdagczbod4DTB0XG.png', 0, '2018-01-08 12:35:29.0', 'jo', 'E', 'Coconut', 'Inspired by\n" +
     "my first trip to Hawaii');";
 
 let artInsert4 = "INSERT INTO Art(art_id, img_location, num_likes, date_posted, owner_username,\n" +
@@ -67,7 +67,7 @@ let commentInsert4 = "INSERT INTO Comment(comment_id,artist_username, art_id, da
 let commentInsert5 = "INSERT INTO Comment(comment_id,artist_username, art_id, date_posted,comment_text) VALUES('3TVx6rtdxTbWr5JK9rp','joel', 'ppr9KJ5rWbTxdtr6xVT3', '2018-01-08 12:35:29.123','Wow this is cool');";
 
 let likesInsert1 = "INSERT INTO Likes(username,art_id) VALUES ('jo', 'i071PlEHxgpsGknfrqUY');";
-let likesInsert2 = "INSERT INTO Likes(username,art_id) VALUES ('jo', 'Ol3WGWBPyU5hRQ1N6NyO');";
+let likesInsert2 = "INSERT INTO Likes(username,art_id) VALUES ('joe', 'i071PlEHxgpsGknfrqUY');";
 let likesInsert3 = "INSERT INTO Likes(username,art_id) VALUES ('joseph', 'i071PlEHxgpsGknfrqUY');";
 let likesInsert4 = "INSERT INTO Likes(username,art_id) VALUES ('joel', 'i071PlEHxgpsGknfrqUY');";
 let likesInsert5 = "INSERT INTO Likes(username,art_id) VALUES ('jody', 'i071PlEHxgpsGknfrqUY');";

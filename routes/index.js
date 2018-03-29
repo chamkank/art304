@@ -75,61 +75,82 @@ router.get('/search', function(req, res){
 });
 
 /* GET stats page */
-router.get('/stats', function(req, res){
-	//calc variable here vartocalc
-	var state = res;
-	// Average number of likes per tagged art
-	db.query(`SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name`, (err, res) => {
-		if (err) {
-			console.log(err);
-		}
-		avgLikesPerTaggedArt = res.rows;
-		// Number of art for each tag
-		db.query(`SELECT tag_name, COUNT(tag_name) FROM Has GROUP BY tag_name`, (err, res) => {
-			if (err) {
-				console.log(err);
-			}
-			artTagCount = res.rows;
-			// Number of tags
-			db.query(`SELECT COUNT(tag_name) FROM tag`, (err, res) => {
-				if (err) {
-					console.log(err);
-				}
-				tagCount = res.rows;
-				// Number of art
-				db.query(`SELECT COUNT(art_id) FROM art`, (err, res) => {
-					if (err) {
-						console.log(err);
-					}
-					artCount = res.rows;
-					// Number of artists
-					db.query(`SELECT COUNT(username) FROM artist_wall`, (err, res) => {
-						if (err) {
-							console.log(err);
-						}
-						artistCount = res.rows;
-						// The most popular tag has this many likes on average (nested aggregation)
-						db.query(`SELECT MAX(foo.avg_num_likes) FROM (SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name) as foo`, (err, res) => {
-							if (err) {
-								console.log(err);
-							}
-							avgLikesPopularTag = res.rows;
-							db.query(`SELECT MIN(foo.avg_num_likes) FROM (SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name) as foo`, (err, res) => {
-								if (err) {
-									console.log(err);
-								}
-								avgLikesUnlikedTag = res.rows;
-								console.log(artCount);
-								state.render('stats', {avgLikesPerTaggedArt : avgLikesPerTaggedArt, artTagCount : artTagCount, tagCount : tagCount, artCount : artCount, artistCount : artistCount, avgLikesPopularTag : avgLikesPopularTag, avgLikesUnlikedTag : avgLikesUnlikedTag});
-							});
-						});
-					});
-				});
-			});
-		});
-	});
+router.get('/stats', function(req, res) {
+    //calc variable here vartocalc
+    var state = res;
+    // Average number of likes per tagged art
+    db.query(`SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name`, (err, res) => {
+        if (err) {
+            console.log(err);
+        }
+        avgLikesPerTaggedArt = res.rows;
+        // Number of art for each tag
+        db.query(`SELECT tag_name, COUNT(tag_name) FROM Has GROUP BY tag_name`, (err, res) => {
+            if (err) {
+                console.log(err);
+            } else {
+                artTagCount = res.rows;
+            }
+            // Number of tags
+            db.query(`SELECT COUNT(tag_name) FROM tag`, (err, res) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    tagCount = res.rows;
+                }
+                // Number of art
+                db.query(`SELECT COUNT(art_id) FROM art`, (err, res) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        artCount = res.rows;
+                    }
+                    // Number of artists
+                    db.query(`SELECT COUNT(username) FROM artist_wall`, (err, res) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            artistCount = res.rows;
+                        }
+                        // The most popular tag has this many likes on average (nested aggregation)
+                        db.query(`SELECT MAX(foo.avg_num_likes) FROM (SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name) as foo`, (err, res) => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                avgLikesPopularTag = res.rows;
+                            }
+                            db.query(`SELECT MIN(foo.avg_num_likes) FROM (SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name) as foo`, (err, res) => {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    avgLikesUnlikedTag = res.rows;
+                                }
+                                db.query(`SELECT * FROM Art WHERE NOT EXISTS(SELECT * FROM Artist_Wall WHERE NOT EXISTS (SELECT * FROM Likes WHERE Art.art_id = Likes.art_id AND Artist_Wall.username = Likes.username))`, (err, res) => {
+                                	if (err){
+                                		console.log(err);
+									} else {
+                                		allLiked = res.rows;
+									} console.log(allLiked);
+                                    console.log(artCount);
+                                    state.render('stats', {
+                                        avgLikesPerTaggedArt: avgLikesPerTaggedArt,
+                                        artTagCount: artTagCount,
+                                        tagCount: tagCount,
+                                        artCount: artCount,
+                                        artistCount: artistCount,
+                                        avgLikesPopularTag: avgLikesPopularTag,
+                                        avgLikesUnlikedTag: avgLikesUnlikedTag,
+										allLiked : allLiked
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
 });
-
 router.post('/search', function(req, res){
   state = res;
   req = req.body;

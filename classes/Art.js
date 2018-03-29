@@ -113,7 +113,18 @@ art.delete = function(art_id){
 };
 
 
+// get art that is liked by every artist!!
 
-
+art.allLike = function(){
+    return new Promise(function(resolve, reject){
+        db.query(`SELECT * FROM Art WHERE NOT EXISTS(SELECT * FROM Artist_Wall WHERE NOT EXISTS (SELECT * FROM Likes WHERE Art.art_id = Likes.art_id AND Artist_Wall.username = Likes.username))`, (err, res) => {
+            if (err) {
+                reject(err.detail);
+            } else {
+                resolve(true);
+            }
+        })
+    });
+};
 
 module.exports = art;

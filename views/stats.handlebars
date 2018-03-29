@@ -1,5 +1,6 @@
 <br>
 <h5>The most liked tag on average has this many likes:</h5>
+
 {{#each avgLikesPopularTag}}
 {{max}}
 <br>
@@ -53,3 +54,12 @@
     </li>
     {{/each}}
 </ul>
+
+
+<h5>Art Like by All Artists:</h5>
+{{#each allLiked}}
+    <h5>
+        Title:
+        <a href="/art/{{art_id}}">{{title}}</a>
+    </h5>
+{{/each}}
