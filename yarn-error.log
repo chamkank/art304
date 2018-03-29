@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Patrick\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js start
+  C:\Program Files\nodejs\node.exe C:\Users\Patrick\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js pull
 
 PATH: 
   C:\Program Files (x86)\Common Files\NetSarang;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files\Condusiv Technologies\IntelliMemory\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\MATLAB\R2016b\runtime\win64;C:\Program Files\MATLAB\R2016b\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\sbt\bin;C:\Program Files\nodejs\;C:\Users\Patrick\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\Patrick\AppData\Local\Programs\Python\Python36\;C:\Users\Patrick\AppData\Local\GitHubDesktop\bin;C:\Users\Patrick\AppData\Local\atom\bin;C:\Users\Patrick\AppData\Roaming\npm
@@ -4318,17 +4318,14 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
-  Error: Command failed.
-  Exit code: 3221225786
-  Command: C:\WINDOWS\system32\cmd.exe
-  Arguments: /d /s /c node ./bin/www
-  Directory: C:\Users\Patrick\Documents\2017-18 BCS Courses\CPSC 304\art304
-  Output:
-  
-      at ProcessTermError.MessageError (C:\Users\Patrick\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:186:110)
-      at new ProcessTermError (C:\Users\Patrick\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:226:113)
-      at ChildProcess.<anonymous> (C:\Users\Patrick\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:30281:17)
-      at emitTwo (events.js:126:13)
-      at ChildProcess.emit (events.js:214:7)
-      at maybeClose (internal/child_process.js:925:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
+  Error: Command "pull" not found.
+      at new MessageError (C:\Users\Patrick\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:186:110)
+      at C:\Users\Patrick\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:87307:17
+      at Generator.next (<anonymous>)
+      at step (C:\Users\Patrick\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:98:30)
+      at C:\Users\Patrick\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:116:14
+      at new Promise (<anonymous>)
+      at new F (C:\Users\Patrick\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:23451:28)
+      at C:\Users\Patrick\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:95:12
+      at runCommand (C:\Users\Patrick\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:87312:22)
+      at Object.<anonymous> (C:\Users\Patrick\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:87412:14)
