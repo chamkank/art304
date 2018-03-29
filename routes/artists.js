@@ -78,4 +78,21 @@ router.get('/:username/followees', function(req, res, next){
     })
 });
 
+router.get('/:username/followers', function(req, res, next){
+    var username = req.params.username;
+    req = req.body;
+    state = res;
+
+    var followers = artist.getFollowers(username);
+    followers.then(function(res){
+        if(res){
+            console.log("Successfully retrieved followers!");
+            state.render('followers', {artists : res});
+        }
+    }).catch(function(err){
+        console.log(err);
+        state.render('errpr');
+    })
+});
+
 module.exports = router;

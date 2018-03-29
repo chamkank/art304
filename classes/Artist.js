@@ -69,6 +69,16 @@ artist.getFollowees = function (username) {
     })
 };
 
+artist.getFollowers = function (username) {
+    return new Promise(function(resolve, reject){
+        database.query(`SELECT * FROM Artist_Wall WHERE Artist_Wall.username IN (SELECT follower_username from Follows WHERE followee_username = '${username}')`, (err, res) => {
+            if (err){ reject(err.detail) }
+            else { resolve(res.rows) }
+        });
+    })
+};
+
+
 artist.getInfo = function (username) {
     return new Promise(function(resolve, reject){
         database.query(`SELECT * FROM Artist_Wall WHERE Artist_Wall.username = '${username}'`, (err, res) => {
