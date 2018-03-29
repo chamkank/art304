@@ -29,14 +29,10 @@ comment.postComment = function (art_id, owner_username, comment_text){
     return new Promise(function (resolve, reject) {
         var datetime = new Date().toLocaleString();
         comment_id = makeid();
-        query = `INSERT INTO Comment(comment_id,artist_username,date_posted,comment_text) VALUES('${comment_id}','${owner_username}','${datetime}','${comment_text}');`
+        query = `INSERT INTO Comment(comment_id,artist_username,art_id,date_posted,comment_text) VALUES('${comment_id}','${art_id}',${owner_username}','${datetime}','${comment_text}');`
         db.query(query, function(err, res){
             if (err) {reject(err.detail)}
-            query = `INSERT INTO Comments_On(comment_id,artist_username,art_id) VALUES('${comment_id}','${owner_username}','${art_id}');`;
-            db.query(query, function(err, res){
-                if (err) {reject(err.detail)}
-                resolve(true)
-            })
+            resolve(true);
         })
     });
 }

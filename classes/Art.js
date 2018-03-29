@@ -17,7 +17,7 @@ function makeid() {
 
 art.getComments = function (art_id){
 	    return new Promise(function (resolve, reject) {
-        db.query(`SELECT * FROM Comment, Comments_On WHERE Comments_On.comment_id = Comment.comment_id AND Comments_On.art_id = '${art_id}' ORDER BY date_posted`, (err, res) => {
+        db.query(`SELECT * FROM Comment WHERE Comment.art_id = '${art_id}' ORDER BY date_posted`, (err, res) => {
             if (err) {
                 reject(err.detail);
             } else {

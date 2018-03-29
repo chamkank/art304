@@ -19,12 +19,9 @@ artist.postComment = function (artId, artist_username, commentString) {
 	var datetime = new Date().toLocaleString();
 
 	return new Promise(function (resolve, reject) {
-		database.query(`INSERT INTO Comment(comment_id,artist_username,date_posted,comment_text) VALUES ('${commentId}', '${artist_username}', '${datetime}', '${commentString}')`, (err, res) => {
+		database.query(`INSERT INTO Comment(comment_id,artist_username,art_id,date_posted,comment_text) VALUES ('${commentId}', '${artist_username}', '${art_id}', '${datetime}', '${commentString}')`, (err, res) => {
 			if (err) { reject(err.detail) }
-			database.query(`INSERT INTO Comments_On(comment_id,artist_username,art_id) VALUES ('${commentId}', '${artist_username}','${artId}')`, (err, res) => {
-				if (err) { reject(err.detail) }
-				else { resolve(true) }
-			});
+            else { resolve(true) }
 		});
 	});
 };
