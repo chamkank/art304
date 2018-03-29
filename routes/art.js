@@ -11,6 +11,10 @@ var taggle = require('taggle');
 
 router.use(passport.initialize());
 router.use(passport.session());
+router.use((req, res, next) => {
+    res.locals.user = req.user;
+    next();
+});
 
 // GET (render) art by ID
 router.get('/:id', function(req, res, next){

@@ -7,14 +7,18 @@ var db = require('../database');
 
 var search = require('../classes/Search');
 
-
 router.use(passport.initialize());
 router.use(passport.session());
+router.use((req, res, next) => {
+	res.locals.user = req.user;
+	next();
+});
+
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
   if (req.user){
-    res.render('profile', { user : req.user });
+		res.render('profile', { user : req.user });
   } else {
     res.render('home');
   }
@@ -59,8 +63,6 @@ router.get('/search', function(req, res){
   res.render('search');
 });
 
-
-//TODO
 /* GET stats page */
 router.get('/stats', function(req, res){
 	//calc variable here vartocalc

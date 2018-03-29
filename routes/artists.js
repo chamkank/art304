@@ -3,6 +3,10 @@ var router = express.Router();
 var artist = require('../classes/Artist');
 var registry = require('../classes/Registry');
 
+router.use((req, res, next) => {
+    res.locals.user = req.user;
+    next();
+});
 
 /*  (render) artists listing. */
 router.get('/', function(req, res, next) {
