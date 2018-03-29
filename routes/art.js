@@ -43,7 +43,6 @@ router.get('/:id', function(req, res, next){
                 }, (err) => {
                     return state.render('error');
                 })
-                owner = true;
             } else {
                 return state.render('art', { art_info : art_info, comments : comments, owner : owner});
             }

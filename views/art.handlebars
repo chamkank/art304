@@ -9,7 +9,9 @@
                     <input type="submit" value="Like ({{art_info.num_likes}})" class="btn btn-primary">
                 {{/if}}
         </form>
-        {{/if}} 
+        {{else}}
+        Liked by <b>{{art_info.num_likes}}</b> artists
+        {{/if}}
         {{#if owner}}
         <form name="del_art" action="/art/{{art_info.art_id}}/delete" method="POST" style="display: inline;">
             <input type="hidden" name="art_id" value="{{art_info.art_id}}">
