@@ -25,7 +25,7 @@ p a:hover {
   color: #fff;
   background: #990033;
   transition: all .25s; }
-
+/* 
 .btn {
   background: #990033;
   padding: 12px 30px;
@@ -40,7 +40,7 @@ p a:hover {
   .btn:active {
     top: 1px; }
   .btn:last-child {
-    margin-right: 0; }
+    margin-right: 0; } */
 
 ::-moz-selection {
   background: #990033;

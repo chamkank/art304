@@ -61,12 +61,12 @@ router.post('/:id/delete', passport.ensureLoggedIn(), function(req, res, next){
         art_info = res;
 		if(art_info.owner_username == req.user.username){
 			art.delete(art_id).then((res)=>{
-				state.redirect('/artist/'+req.user.username);
+				state.redirect('/artists/'+req.user.username);
 			},  (err)=>{
 				console.log(err);
 			});
 		}
-		else{
+		else {
 			state.render('unauthorized');
 		}
     }, (err)=>{

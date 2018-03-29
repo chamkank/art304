@@ -14,8 +14,8 @@
         {{#if owner}}
         <form name="del_art" action="/art/{{art_info.art_id}}/delete" method="POST" style="display: inline;">
             <input type="hidden" name="art_id" value="{{art_info.art_id}}">
+            <input type="submit" value="Delete" class="btn btn-danger">
         </form>
-        <button type="submit" form="del_art" class="btn btn-danger" value="DELETE">Delete art</button>
         {{/if}}
     </div>
 
