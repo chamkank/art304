@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var artist = require('../classes/Artist');
 var registry = require('../classes/Registry');
+var passport = require('../passport');
 
 router.use((req, res, next) => {
     res.locals.user = req.user;
@@ -32,14 +33,26 @@ router.get('/:username', function(req, res, next) {
     artistArt = artist.getArt(username);
 
     artistArt.then(function(res){
-        console.log("successfully got art");
-        console.log(res);
-        state.render('artist', {art : res, username : username});
+       var art = res;
+        var owner = false;
+        if(req.user){
+            artist.hasFollowed(req.user.username, username).then((res)=>{
+                if(req.user.username == username){
+                    owner = true;
+                }
+                return state.render('artist', {art : art, username : username, owner : owner, follows : res});
+            }, (err) => {
+                return state.render('404');
+            })
+        } else {
+            return state.render('artist', {art : art, username : username, owner : owner});
+        }
     }).catch(function(err){
         console.log(err);
-        state.render('error')
+        return state.render('404')
     })
 });
+
 
 /* POST to artists (create new artist) */
 router.post('/', function(req, res, next) {
@@ -82,7 +95,7 @@ router.get('/:username/followees', function(req, res, next){
     })
 });
 
-router.get('/:username/followers', function(req, res, next){
+router.get('/:username/followers', passport.ensureLoggedIn(), function(req, res, next){
     var username = req.params.username;
     req = req.body;
     state = res;
@@ -96,6 +109,20 @@ router.get('/:username/followers', function(req, res, next){
     }).catch(function(err){
         console.log(err);
         state.render('errpr');
+    })
+});
+
+
+
+
+router.post('/:username/follow', passport.ensureLoggedIn(), function(req, res, next){
+    var followee_username = req.params.username;
+    var follower_username = req.user.username;
+    state = res;
+    artist.followArtist(follower_username, followee_username).then((res)=>{
+        state.redirect('/artists/'+followee_username); // refresh page
+    }, (err)=>{
+        console.log(err);
     })
 });
 

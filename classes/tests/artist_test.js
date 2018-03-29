@@ -5,8 +5,19 @@ password = 'testpass';
 email_address = 'email@email.com';
 birth_date = '2018-05-17';
 
+artist.hasFollowed('jo', 'joel').then(function(res){
+
+        console.log(res);
+        console.log('success')
+
+}).catch(function(err){
+    console.log(err.details)
+    console.log('error')
+})
 
 
+
+/*
 var likeArt = artist.likeArt('jo','Ol3WGWBPyU5hRQ1N6NyO');
 
 likeArt.then(function(res){
@@ -17,7 +28,7 @@ likeArt.then(function(res){
 }).catch(function(err){
     console.log(err);
     console.log("error")
-})
+}) */
 
 
 //var createUser = artist.createArtist(username, password, email_address, birth_date);

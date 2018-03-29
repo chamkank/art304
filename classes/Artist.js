@@ -101,8 +101,52 @@ artist.hasLiked = function (username, art_id){
 			}
 		})
 	})
-}
+};
 
+artist.followArtist = function(follower, followee){
+	return new Promise(function (resolve, reject){
+        database.query(`SELECT * FROM follows WHERE follower_username = '${follower}' AND followee_username = '${followee}';`, (err, res) => {
+            if (err) {
+                reject(err.detail)
+            } else if(res.rows.length == 0) {
+
+                database.query(`INSERT INTO follows(follower_username,followee_username) VALUES ('${follower}','${followee}');`, (err2, res2) => {
+                    if (err2) {
+                        reject(err2.detail);
+                    }
+                    else {
+                        resolve(true);
+                    }
+                });
+            } else if(res.rows.length > 0) {
+                database.query(`DELETE FROM follows WHERE follower_username = '${follower}' AND followee_username = '${followee}';`, (err3, res3) => {
+                    if (err3){
+                        reject(err3.detail);
+                    } else {
+                        resolve(true);
+                    }
+                });
+            }
+        });
+    });
+};
+
+artist.hasFollowed = function (follower, followee){
+    return new Promise(function(resolve, reject){
+        database.query(`SELECT * FROM follows WHERE follower_username = '${follower}' AND followee_username = '${followee}'`, function(err, res){
+            if (err) {
+                console.log(err)
+                reject(err.detail) }
+            else {
+                if (res.rows.length == 0){
+                    resolve(false);
+                } else {
+                    resolve(true);
+                }
+            }
+        })
+    })
+};
 
 artist.likeArt = function(username, art_id){
     return new Promise(function (resolve, reject) {
