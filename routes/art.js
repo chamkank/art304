@@ -100,16 +100,19 @@ router.post('/', function(req, res, next){
         console.log("FILES:");
         console.log(files);
 
-        console.log();
+
 
         //var imgLocation = JSON.stringify(path.relative(path.dirname(__dirname),files.art.path));
         //console.log(imgLocation);
-
+        
         var fileName = (path.basename(files.art.path)).replace("upload_", "");
         var filePathUpdate = "public\\\\art\\\\"+fileName;
         fs.renameSync(files.art.path,filePathUpdate);
         var imgLocation = fileName;
         var state = res;
+
+        let tags = fields.tags;
+
         // TODO: Complete implementation
         // Adding tags needs to be taken care of seperately
         // Using jo as a place holder; need to use actual user (done?)
@@ -117,7 +120,7 @@ router.post('/', function(req, res, next){
         // database needs to allows more chars form image location path; currently storing image name
         // found in art directory of the root
         // need two different pages for succesful and not succesful adding of art
-        art.postArt(user, imgLocation, fields.title, fields.description, fields.rating).then(function (res) {
+        art.postArt(user, imgLocation, fields.title, fields.description, tags, fields.rating).then(function (res) {
             if (res) {
                 console.log('Art added succesfully');
                 state.redirect('/art');

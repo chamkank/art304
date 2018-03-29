@@ -82,3 +82,14 @@ getTags.then(function (res) {
 }).catch(function (err) {
     console.log(err);
 });*/
+
+/*var postArt = art.postArt("jo","1c8aab887a12887857501aab9e3fa676.jpg","titleTest001","decriptionTest001",
+    "unexisting1,unexisting2,unexisting3","E");
+postArt.then(function (res) {
+    if (res) {
+        console.log('Successfully tag info: ');
+        console.log(res);
+    }
+}).catch(function (err) {
+    console.log(err);
+});*/

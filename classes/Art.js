@@ -27,17 +27,38 @@ art.getComments = function (art_id){
     });
 };
 
-art.postArt = function (username, imgLocation, title, description, content_rating){
+art.postArt = function (username, imgLocation, title, description, tags, content_rating){
 	return new Promise(function (resolve, reject) {
 		var art_id = makeid();
 		var date_posted = new Date().toLocaleString();
+
+        var all_tags = tags.split(',');
+        if (all_tags) {
+            var temp_tags = new Array();
+            for (let tag of all_tags) {
+                tag = tag.trim();
+                temp_tags.push('\'' + tag + '\'');
+            }
+            all_tags = temp_tags;
+        }
+
+        var all_tags_string = all_tags.join(',');
+        //console.log(all_tags_string);
+        //var test_string = ["painting","food"];
         db.query(`INSERT INTO Art(art_id, img_location, num_likes, date_posted, owner_username, description, content_rating, title) VALUES ('${art_id}', '${imgLocation}', '${0}', '${date_posted}','${username}','${description}','${content_rating}','${title}')`, (err, res) => {
             if (err) {
                 reject(err.detail);
             } else {
-                resolve(true);
+                db.query(`INSERT INTO Tag(tag_name) VALUES (unnest(ARRAY[` + all_tags_string + `])) ON CONFLICT (tag_name) DO NOTHING; INSERT INTO Has(art_id,tag_name) VALUES ('${art_id}', unnest(ARRAY[` + all_tags_string + `]));`, (err2, res2) => {
+                    if (err2) {
+                        reject(err2.detail);
+                    }
+                    else {
+                        resolve(true);
+                    }
+                });
             }
-        })
+        });
 	});
 };
 

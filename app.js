@@ -30,7 +30,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(require('express-session')({ secret: config.get('passport.secret'), resave: false, saveUninitialized: false }));
 
-
 // Routes
 app.use('/', index);
 app.use('/artists', artists);
