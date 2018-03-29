@@ -30,21 +30,22 @@ router.get('/:id', function(req, res, next){
                 comments.push(comment);
             }
             owner = false;
-            if (req.user && req.user.username == art_info.owner_username){
-                if (req.user.username){
-                    artist.hasLiked(req.user.username, art_id).then((res)=>{            
-                        if (Object.keys(art_info).length == 0){
-                            return state.render('404');
-                        } else {
-                            return state.render('art', { art_info : art_info, comments : comments, owner : owner, user : req.user, liked : res})
+            if (req.user){
+                artist.hasLiked(req.user.username, art_id).then((res)=>{            
+                    if (Object.keys(art_info).length == 0){
+                        return state.render('404');
+                    } else {
+                        if (req.user.username == art_info.owner_username){
+                            owner = true;
                         }
-                    }, (err) => {
-                        return state.render('error');
-                    })
-                }
+                        return state.render('art', { art_info : art_info, comments : comments, owner : owner, user : req.user, liked : res});
+                    }
+                }, (err) => {
+                    return state.render('error');
+                })
                 owner = true;
             } else {
-                return state.render('art', { art_info : art_info, comments : comments, owner : owner, user : req.user})
+                return state.render('art', { art_info : art_info, comments : comments, owner : owner});
             }
         },(err)=>{
             return state.render('404');
@@ -150,7 +151,5 @@ router.post('/:id/like', passport.ensureLoggedIn(), function(req, res, next){
         console.log(err);
     })
 })
-
-
 
 module.exports = router;
