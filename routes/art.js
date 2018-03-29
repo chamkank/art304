@@ -43,6 +43,8 @@ router.get('/:id', function(req, res, next){
                     })
                 }
                 owner = true;
+            } else {
+                return state.render('art', { art_info : art_info, comments : comments, owner : owner, user : req.user})
             }
         },(err)=>{
             return state.render('404');
