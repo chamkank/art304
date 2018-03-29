@@ -4,9 +4,9 @@
         <form name="like_art" action="/art/{{art_info.art_id}}/like" method="POST" style="display: inline;">
                 <input type="hidden" name="art_id" value="{{art_info.art_id}}">
                 {{#if liked}}
-                    <input type="submit" value="Unlike" class="btn btn-primary">
+                    <input type="submit" value="Unlike ({{art_info.num_likes}})" class="btn btn-primary">
                 {{else}}
-                    <input type="submit" value="Like" class="btn btn-primary">
+                    <input type="submit" value="Like ({{art_info.num_likes}})" class="btn btn-primary">
                 {{/if}}
         </form>
         </button>
