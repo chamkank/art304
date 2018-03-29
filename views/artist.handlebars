@@ -1,3 +1,19 @@
+<br>
+{{#unless owner}}
+    {{#if user}}
+    <center>
+        <form name="follow_artist" action="/artists/{{username}}/follow" method="POST" style="display: inline;">
+            <input type="hidden" name="username" value="{{username}}">
+                {{#if follows}}
+                    <input type="submit" value="Unfollow {{username}}" class="btn btn-primary">
+                {{else}}
+                    <input type="submit" value="Follow {{username}}" class="btn btn-primary">
+                {{/if}}
+        </form>
+        </center>
+    {{/if}}
+    <br><br>
+{{/unless}}
 
 <div class="gallery row">
     {{#each art}}
@@ -6,18 +22,4 @@
     </a>
     {{/each}}
 </div>
-
-
-{{#unless owner}}
-    {{#if user}}
-        <form name="follow_artist" action="/artists/{{username}}/follow" method="POST" style="display: inline;">
-            <input type="hidden" name="username" value="{{username}}">
-                {{#if follows}}
-                    <input type="submit" value="Unfollow" class="btn btn-primary">
-                {{else}}
-                    <input type="submit" value="Follow" class="btn btn-primary">
-                {{/if}}
-        </form>
-    {{/if}}
-{{/unless}}
 
