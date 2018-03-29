@@ -1,48 +1,55 @@
-<h4>The most liked tag on average has this many likes:</h4>
+<br>
+<h5>The most liked tag on average has this many likes:</h5>
 {{#each avgLikesPopularTag}}
 {{max}}
 <br>
 {{/each}}
-
-<h4>The least liked tag on average has this many likes:</h4>
+</div>
+<br>
+<h5>The least liked tag on average has this many likes:</h5>
 {{#each avgLikesUnlikedTag}}
 {{min}}
 <br>
 {{/each}}
-
-
-<h4>Average number of likes per art per tag:</h4>
-
-{{#each avgLikesPerTaggedArt}}
-{{tag_name}} : {{avg_num_likes}}
 <br>
-{{/each}}
+<h5>Average number of likes per art per tag:</h5>
 
-
-<h4>Number of different tags</h4>
+<ul>
+    {{#each avgLikesPerTaggedArt}}
+    <li>
+        {{tag_name}} : {{avg_num_likes}}
+        <br>
+    </li>
+    {{/each}}
+</ul>
+<br>
+<h5>Number of different tags</h5>
 
 {{#each tagCount}}
 {{count}}
 <br>
 {{/each}}
-
-<h4>Number of different art</h4>
+<br>
+<h5>Number of different art</h5>
 
 {{#each artCount}}
 {{count}}
 <br>
 {{/each}}
-
-<h4>Number of different artists</h4>
+<br>
+<h5>Number of different artists</h5>
 
 {{#each artistCount}}
 {{count}}
 <br>
 {{/each}}
-
-<h4>Number of art for each tag</h4>
-
-{{#each artTagCount}}
-{{tag_name}} : {{count}}
 <br>
-{{/each}}
+<h5>Number of art for each tag</h5>
+<ul>
+    {{#each artTagCount}}
+    <li>
+        {{tag_name}} : {{count}}
+        <br>
+    </li>
+    {{/each}}
+</ul>

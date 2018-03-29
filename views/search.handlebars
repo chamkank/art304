@@ -1,10 +1,13 @@
+<br>
 <h1>Search page</h1>
-
-<form action="/search" method="post">
-    <input type="text" name="tags" placeholder="Enter comma-separated tags">
+<br>
+<form action="/search" method="post" name="search">
+    <input type="text" name="tags" placeholder="Enter comma-separated tags" style="width: 250px">
+    <input type="submit" value="Search">
 </form>
 
     {{#if results}}
+        <br>
         {{#each results}}
         <ul>
             <li>

@@ -12,6 +12,13 @@
 
     {{! <link rel="stylesheet" type="text/css" href="\public\taggle.css">}}
     {{!-- <script src="\public\taggle.js"></script> --}}
+    <style>
+        .navbar-nav > li{
+            margin-left:15px;
+            margin-right:15px;
+        }
+
+    </style>
 </head>
 <body>
     <header>
@@ -23,8 +30,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                     {{#if user}}
                         <li class="nav-item">
@@ -35,15 +42,15 @@
                         <a class="nav-link" href="/search">Search</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/artists">Artists</a>
+                        <a class="nav-link" href="/stats">Statistics</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/stats">Stats</a>
+                        <a class="nav-link" href="/artists">Artist Directory</a>
                     </li>
                     {{#if user}}
                     {{! signout not yet implemented - remove comment when done }}
                         <li class="nav-item">
-                            <a class="nav-link" href="/artists/{{user.username}}/followees">Artists Following</a>
+                            <a class="nav-link" href="/artists/{{user.username}}/followees">Following</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/artists/{{user.username}}/followers">Followers</a>
