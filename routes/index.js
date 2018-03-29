@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('../passport');
 var config = require('config');
-
+var artist = require('../classes/Artist');
 var db = require('../database');
 
 var search = require('../classes/Search');
@@ -17,8 +17,14 @@ router.use((req, res, next) => {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+	state = res;
   if (req.user){
-		res.render('profile', { user : req.user });
+		artist.getArtFeed(req.user.username).then((res)=>{
+			console.log(res.slice(0, 10));
+			state.render('profile', { user : req.user, art : res.slice(0, 10) });
+		}, (err)=>{
+			state.render('error');
+		})
   } else {
     res.render('home');
   }

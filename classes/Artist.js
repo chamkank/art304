@@ -176,5 +176,16 @@ artist.likeArt = function(username, art_id){
     });
 };
 
+artist.getArtFeed = function(username){
+    followingQuery = `(SELECT followee_username FROM Follows WHERE follower_username='${username}')`
+    artQuery = `SELECT * FROM Art, following WHERE Art.owner_username = following.followee_username`
+    return new Promise(function (resolve, reject){
+        database.query(`WITH following AS ${followingQuery} ${artQuery} ORDER BY date_posted desc`, function(err, res){
+            if (err) { reject(err) }
+            resolve(res.rows);
+        })
+    });
+}
+
 
 module.exports = artist;
