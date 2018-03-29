@@ -92,42 +92,33 @@ router.post('/', function(req, res, next){
     form.keepExtensions = true;
     form.parse(req, function(err, fields, files){
         if(err)
-            return res.redirect('/art');
+            return res.render('error');
 
-        // For testing purposes
-        console.log("FIELDS:");
-        console.log(fields);
-        console.log("FILES:");
-        console.log(files);
-
-
-
-        //var imgLocation = JSON.stringify(path.relative(path.dirname(__dirname),files.art.path));
-        //console.log(imgLocation);
-        
         var fileName = (path.basename(files.art.path)).replace("upload_", "");
         var filePathUpdate = "public\\\\art\\\\"+fileName;
         fs.renameSync(files.art.path,filePathUpdate);
         var imgLocation = fileName;
         var state = res;
 
+        // check if tags are valid
         let tags = fields.tags;
+        var all_tags = tags.split(',');
+        if (all_tags) {
+            for (let tag of all_tags) {
+                tag = tag.trim();
+                if (tag.length > 20){
+                    return res.render("error", { error : "one or more of your tags were too long"});
+                }
+            }
+        }
 
-        // TODO: Complete implementation
-        // Adding tags needs to be taken care of seperately
-        // Using jo as a place holder; need to use actual user (done?)
-        // res.redirect throws an error
-        // database needs to allows more chars form image location path; currently storing image name
-        // found in art directory of the root
-        // need two different pages for succesful and not succesful adding of art
         art.postArt(user, imgLocation, fields.title, fields.description, tags, fields.rating).then(function (res) {
             if (res) {
                 console.log('Art added succesfully');
                 state.redirect('/art');
             }
         }).catch(function (err) {
-            console.log("there is an error");
-            res.redirect('/art');
+            res.render('error', { error : err });
         });
     });
 })
