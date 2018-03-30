@@ -1,99 +1,173 @@
+
+<div class = "container">
+    <form role = "form"
+          enctype = "multipart/form-data" method = "POST"
+          action = "/stats">
+
+        <fieldset class="form-group row">
+            {{! Should be using legend attribute instead of label }}
+            <label class="col-sm-2 col-form-label"> Select Statistic: </label>
+            <div class="col-sm-6">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" required type="radio" name="stat" id="fieldRatedEveryone" value="1">
+                        The most liked tag on average has this many likes
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="stat" id="fieldRatedR" value="2">
+                        The least liked tag on average has this many likes
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" required type="radio" name="stat" id="fieldRatedEveryone" value="3">
+                        Average number of likes per art per tag
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" required type="radio" name="stat" id="fieldRatedEveryone" value="4">
+                        Number of different tags
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" required type="radio" name="stat" id="fieldRatedEveryone" value="5">
+                        Number of different art
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" required type="radio" name="stat" id="fieldRatedEveryone" value="6">
+                        Number of different artists
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" required type="radio" name="stat" id="fieldRatedEveryone" value="7">
+                        Number of art for each tag
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" required type="radio" name="stat" id="fieldRatedEveryone" value="8">
+                        Art liked by all artists
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="form-group row">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+
+
+
 <br>
-<h5>The most liked tag on average has this many likes:</h5>
 {{#if avgLikesPopularTag}}
-{{#each avgLikesPopularTag}}
-{{max}}
-<br>
-{{/each}}
+    <h5>The most liked tag on average has this many likes:</h5>
+    {{#each avgLikesPopularTag}}
+        {{max}}
+        <br>
+    {{/each}}
 {{else}}
-<h5>ERROR: VALUE NOT SHOWN</h5>
+{{! <h5>ERROR: VALUE NOT SHOWN</h5> }}
 {{/if}}
 </div>
 <br>
-<h5>The least liked tag on average has this many likes:</h5>
 {{#if avgLikesUnlikedTag}}
-{{#each avgLikesUnlikedTag}}
-{{min}}
-<br>
-{{/each}}
+    <h5>The least liked tag on average has this many likes:</h5>
+    {{#each avgLikesUnlikedTag}}
+        {{min}}
+        <br>
+    {{/each}}
 {{else}}
-    <h5>ERROR: VALUE NOT SHOWN</h5>
+{{! <h5>ERROR: VALUE NOT SHOWN</h5> }}
 {{/if}}
 <br>
-<h5>Average number of likes per art per tag:</h5>
 {{#if avgLikesPerTaggedArt}}
-<ul>
-    {{#each avgLikesPerTaggedArt}}
-    <li>
-        {{tag_name}} : {{avg_num_likes}}
-        <br>
-    </li>
-    {{/each}}
-</ul>
+    <h5>Average number of likes per art per tag:</h5>
+    <ul>
+        {{#each avgLikesPerTaggedArt}}
+            <li>
+                {{tag_name}} : {{avg_num_likes}}
+                <br>
+            </li>
+        {{/each}}
+    </ul>
 {{else}}
-    <h5>ERROR: VALUE NOT SHOWN</h5>
+{{! <h5>ERROR: VALUE NOT SHOWN</h5> }}
 {{/if}}
 <br>
 
-<h5>Number of different tags</h5>
+
 {{#if tagCount}}
-{{#each tagCount}}
-{{count}}
-<br>
-{{/each}}
-{{else}}
-    <h5>ERROR: VALUE NOT SHOWN</h5>
-{{/if}}
-<br>
-<h5>Number of different art</h5>
-{{#if artCount}}
-{{#each artCount}}
-{{count}}
-<br>
-{{/each}}
-<br>
-{{else}}
-    <h5>ERROR: VALUE NOT SHOWN</h5>
-{{/if}}
-
-<h5>Number of different artists</h5>
-{{#if artistCount}}
-{{#each artistCount}}
-{{count}}
-<br>
-{{/each}}
-{{else}}
-    <h5>ERROR: VALUE NOT SHOWN</h5>
-{{/if}}
-<br>
-<h5>Number of art for each tag</h5>
-{{#if artistCount}}
-<ul>
-    {{#each artTagCount}}
-    <li>
-        {{tag_name}} : {{count}}
+    <h5>Number of different tags</h5>
+    {{#each tagCount}}
+        {{count}}
         <br>
-    </li>
     {{/each}}
-</ul>
 {{else}}
-    <h5>ERROR: VALUE NOT SHOWN</h5>
+{{! <h5>ERROR: VALUE NOT SHOWN</h5> }}
+{{/if}}
+<br>
+
+{{#if artCount}}
+    <h5>Number of different art</h5>
+    {{#each artCount}}
+        {{count}}
+        <br>
+    {{/each}}
+    <br>
+{{else}}
+{{! <h5>ERROR: VALUE NOT SHOWN</h5> }}
+{{/if}}
+
+{{#if artistCount}}
+    <h5>Number of different artists</h5>
+    {{#each artistCount}}
+        {{count}}
+        <br>
+    {{/each}}
+{{else}}
+{{! <h5>ERROR: VALUE NOT SHOWN</h5> }}
+{{/if}}
+<br>
+
+{{#if artTagCount}}
+    <h5>Number of art for each tag</h5>
+    <ul>
+        {{#each artTagCount}}
+            <li>
+                {{tag_name}} : {{count}}
+                <br>
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+{{! <h5>ERROR: VALUE NOT SHOWN</h5> }}
 {{/if}}
 
 
-<h5>Art Like by All Artists:</h5>
+
 {{#if allLiked}}
-{{#each allLiked}}
-    <ul>
-    <li>
-        Title:
-        <a href="/art/{{art_id}}">{{title}}</a>
-    </li>
-    </ul>
-{{/each}}
+    <h5>Art Like by All Artists:</h5>
+    {{#each allLiked}}
+        <ul>
+            <li>
+                Title:
+                <a href="/art/{{art_id}}">{{title}}</a>
+            </li>
+        </ul>
+    {{/each}}
 {{else}}
-    <ul>
-    <li>ERROR: VALUE NOT SHOWN</li>
-    </ul>
+    {{!<ul>
+        <li>ERROR: VALUE NOT SHOWN</li>
+    </ul>}}
 {{/if}}
 
