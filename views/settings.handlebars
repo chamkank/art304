@@ -1,0 +1,10 @@
+<br>
+<b>Current birthday:</b> {{user.birth_date}}<br><br>
+Enter new birthday: 
+<form action="/settings" method="post">
+    <input type="date" name="birth_date" required>
+    <input type="submit" value="Submit">
+</form>
+<br>
+
+<b style="color:red;">{{#if error}} You must select a valid birthday (before year 2018). {{/if}}</b>

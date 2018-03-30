@@ -185,5 +185,17 @@ artist.getArtFeed = function(username){
     });
 }
 
+artist.updateBirthDate = function (username, birth_date) {
+	return new Promise(function (resolve, reject) {
+		database.query(`UPDATE Artist_Wall SET birth_date = '${birth_date}' WHERE username='${username}';`, (err, res) => {
+			if (err) {
+				reject(err.detail);
+			} else {
+				resolve(true);
+			}
+		})
+	});
+};
+
 
 module.exports = artist;

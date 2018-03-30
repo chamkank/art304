@@ -174,5 +174,20 @@ router.post('/search', function(req, res){
   }
 })
 
+router.get('/settings', passport.ensureLoggedIn(), function(req, res){
+    res.render('settings');
+});
+
+router.post('/settings', passport.ensureLoggedIn(), function(req, res){
+    var state = res;
+    console.log(req.body.birth_date);
+    var bd = req.body.birth_date
+    artist.updateBirthDate(req.user.username, bd).then((res)=>{
+        state.redirect('/settings');
+    }, (err)=>{
+        state.render('settings', { error : err });
+    });
+});
+
 
 module.exports = router;
