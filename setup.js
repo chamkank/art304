@@ -41,7 +41,7 @@ let artInsert1 = 'INSERT INTO Art(art_id, img_location, num_likes, date_posted, 
 
 let artInsert2 = "INSERT INTO Art(art_id, img_location, num_likes, date_posted, owner_username,\n" +
     "    content_rating, title, description) VALUES ('Ol3WGWBPyU5hRQ1N6NyO',\n" +
-    "'img/Ol3WGWBPyU5hRQ1N6NyO.png', 0, '2017-05-09 12:35:0.123', 'jo', 'E', 'Banana', 'My first\n" +
+    "'img/Ol3WGWBPyU5hRQ1N6NyO.jpg', 0, '2017-05-09 12:35:0.123', 'jo', 'E', 'Cat!', 'My first\n" +
     "painting');";
 
 let artInsert3 = "INSERT INTO Art(art_id, img_location, num_likes, date_posted, owner_username,\n" +
