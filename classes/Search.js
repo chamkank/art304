@@ -13,7 +13,7 @@ search.getArtByTags = function (tags){
         selects.push(select); 
     }
     let query = selects.join(' INTERSECT ');
-    query = 'WITH ids as' + '(' + query + ') SELECT * FROM ids, Art where Art.art_id = ids.art_id;';
+    query = 'WITH ids AS' + '(' + query + ') SELECT * FROM ids JOIN Art ON Art.art_id = ids.art_id;';
     console.log(query)
     return new Promise(function(resolve, reject){
         db.query(query, function(err, res){

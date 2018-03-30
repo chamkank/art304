@@ -68,7 +68,7 @@ router.post('/', function(req, res, next) {
     }
   }).catch(function (err) {
       console.log(err);
-      state.render('signup', { failed : true });
+      state.render('signup', { failed : true, error : err });
   });
 });
 
