@@ -1,0 +1,132 @@
+// The functional script used to populate the database can be found at https://github.com/chamkank/art304/blob/master/setup.js
+// This is simply a list of all create table, populate table, and queries used in the application
+
+
+CREATE TABLE IF NOT EXISTS Tag(tag_name char(20) primary key);
+CREATE TABLE IF NOT EXISTS Artist_Wall(username varchar(20) primary key, password varchar(20) NOT NULL, email_address varchar(254) unique NOT NULL, date_joined timestamp NOT NULL, birth_date date CHECK (birth_date < '2018-01-1') NOT NULL);
+CREATE TABLE IF NOT EXISTS Likes(art_id char(20) NOT NULL references Art(art_id) ON DELETE CASCADE ON UPDATE CASCADE, username char(20) NOT NULL references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(art_id, username));
+CREATE TABLE IF NOT EXISTS Art(art_id char(20) primary key, img_name varchar(40) NOT NULL, num_likes int NOT NULL CHECK (num_likes >= 0), date_posted timestamp NOT NULL, owner_username varchar(20) NOT NULL references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE , description varchar(100) NOT NULL, content_rating varchar(20) NOT NULL, title varchar(20) NOT NULL);
+CREATE TABLE IF NOT EXISTS Has(art_id char(20) NOT NULL references Art(art_id) ON DELETE CASCADE ON UPDATE CASCADE, tag_name char(20) NOT NULL references Tag(tag_name) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(art_id, tag_name));
+CREATE TABLE IF NOT EXISTS Follows(follower_username char(20) NOT NULL references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE, followee_username char(20) NOT NULL references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(follower_username, followee_username));
+CREATE TABLE IF NOT EXISTS Comment(comment_id char(20) primary key, artist_username varchar(20) NOT NULL references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE, art_id varchar(20) NOT NULL references Art(art_id) ON DELETE CASCADE ON UPDATE CASCADE, date_posted timestamp NOT NULL, comment_text varchar(250) NOT NULL);
+
+INSERT INTO Tag(tag_name) VALUES ('painting');
+INSERT INTO Tag(tag_name) VALUES ('renaissance');
+INSERT INTO Tag(tag_name) VALUES ('water colour');
+INSERT INTO Tag(tag_name) VALUES ('cats');
+INSERT INTO Tag(tag_name) VALUES ('bird');
+
+INSERT INTO Artist_Wall(username,password,email_address,date_joined,birth_date) VALUES
+('jo','apple1234','japple3@fake.mail','2017-05-17 12:0:0.0','2000-05-17');
+INSERT INTO Artist_Wall(username,password,email_address,date_joined,birth_date) VALUES
+('joe','apple1234','japple4@fake.mail','2017-05-09 12:35:0.123','2000-05-09');
+INSERT INTO Artist_Wall(username,password,email_address,date_joined,birth_date) VALUES
+('joseph','apple12345','japple5@fake.mail','2018-01-08 12:35:29.0','2000-01-08');
+INSERT INTO Artist_Wall(username,password,email_address,date_joined,birth_date) VALUES
+('joel','apple123456','japple6@fake.mail','2018-01-08 12:35:29.123','2000-01-08');
+INSERT INTO Artist_Wall(username,password,email_address,date_joined,birth_date) VALUES (
+'jody','apple1234567','japple7@fake.mail','2018-01-08 12:35:29.123','2001-01-08');
+
+INSERT INTO Follows(follower_username, followee_username) VALUES ('jo','joel');
+INSERT INTO Follows(follower_username,followee_username) VALUES ('joel','jo');
+INSERT INTO Follows(follower_username,followee_username) VALUES ('joseph','joel');
+INSERT INTO Follows(follower_username,followee_username) VALUES ('joel','joseph');
+INSERT INTO Follows(follower_username,followee_username) VALUES ('jo','joseph');
+INSERT INTO Follows(follower_username,followee_username) VALUES ('jo','jody');
+INSERT INTO Follows(follower_username,followee_username) VALUES ('jo','joe');
+
+INSERT INTO Art(art_id, img_name, num_likes, date_posted, owner_username, content_rating, title, description) VALUES ('i071PlEHxgpsGknfrqUY','i071PlEHxgpsGknfrqUY.jpg', 5, '2017-05-17 12:0:0.0', 'jo', 'E', 'Medieval Cat', 'Now THIS is real art.');
+INSERT INTO Art(art_id, img_name, num_likes, date_posted, owner_username, content_rating, title, description) VALUES ('Ol3WGWBPyU5hRQ1N6NyO', 'Ol3WGWBPyU5hRQ1N6NyO.jpg', 0, '2017-05-09 12:35:0.123', 'jo', 'E', 'Cat!', 'My first painting');
+INSERT INTO Art(art_id, img_name, num_likes, date_posted, owner_username, content_rating, title, description) VALUES ('dvnKPdagczbod4DTB0XG', 'dvnKPdagczbod4DTB0XG.png', 0, '2018-01-08 12:35:29.0', 'jo', 'E', 'Earth', 'Made this in 5 mins!');
+INSERT INTO Art(art_id, img_name, num_likes, date_posted, owner_username, content_rating, title, description) VALUES ('ppr9KJ5rWbTxdtr6xVT3', 'ppr9KJ5rWbTxdtr6xVT3.png', 0, '2018-01-08 12:35:29.123', 'joseph', 'E', 'Dodo', 'I tried to draw a bird');
+INSERT INTO Art(art_id, img_name, num_likes, date_posted, owner_username, content_rating, title, description) VALUES ('Qe9KNLi6L0CLCT2i68FB', 'Qe9KNLi6L0CLCT2i68FB.gif', 0, '2018-01-08 12:35:29.123', 'joel', 'R', 'Animated bird!', 'I love animation!');
+
+INSERT INTO Comment(comment_id,artist_username, art_id, date_posted,comment_text) VALUES('YUqrfnkGspgxHElP170i','jo', 'i071PlEHxgpsGknfrqUY', '2017-05-17 12:0:0.0','Wow');
+INSERT INTO Comment(comment_id,artist_username, art_id, date_posted,comment_text) VALUES('OyN6N1QRh5UyPBWGW3lO','jo', 'i071PlEHxgpsGknfrqUY', '2017-05-09 12:35:0.123','Cool');
+INSERT INTO Comment(comment_id,artist_username, art_id, date_posted,comment_text) VALUES('GX0BTD4dobzcgadPKnvd','joe', 'Ol3WGWBPyU5hRQ1N6NyO', '2018-01-08 12:35:29.0','Wicked');
+INSERT INTO Comment(comment_id,artist_username, art_id, date_posted,comment_text) VALUES('i43TVx6rtdxTbWr5JK9r','joseph', 'dvnKPdagczbod4DTB0XG', '2018-01-08 12:35:29.123','Awesome');
+INSERT INTO Comment(comment_id,artist_username, art_id, date_posted,comment_text) VALUES('3TVx6rtdxTbWr5JK9rp','joel', 'ppr9KJ5rWbTxdtr6xVT3', '2018-01-08 12:35:29.123','Wow this is cool');
+
+INSERT INTO Likes(username,art_id) VALUES ('jo', 'i071PlEHxgpsGknfrqUY');
+INSERT INTO Likes(username,art_id) VALUES ('joe', 'i071PlEHxgpsGknfrqUY');
+INSERT INTO Likes(username,art_id) VALUES ('joseph', 'i071PlEHxgpsGknfrqUY');
+INSERT INTO Likes(username,art_id) VALUES ('joel', 'i071PlEHxgpsGknfrqUY');
+INSERT INTO Likes(username,art_id) VALUES ('jody', 'i071PlEHxgpsGknfrqUY');
+
+INSERT INTO Has(art_id,tag_name) VALUES ('i071PlEHxgpsGknfrqUY', 'cats');
+INSERT INTO Has(art_id,tag_name) VALUES ('i071PlEHxgpsGknfrqUY', 'painting');
+INSERT INTO Has(art_id,tag_name) VALUES ('Ol3WGWBPyU5hRQ1N6NyO' ,'cats');
+INSERT INTO Has(art_id,tag_name) VALUES ('Ol3WGWBPyU5hRQ1N6NyO' ,'renaissance');
+INSERT INTO Has(art_id,tag_name) VALUES ('dvnKPdagczbod4DTB0XG' ,'water colour');
+INSERT INTO Has(art_id,tag_name) VALUES ('ppr9KJ5rWbTxdtr6xVT3' ,'bird');
+INSERT INTO Has(art_id,tag_name) VALUES ('Qe9KNLi6L0CLCT2i68FB' ,'bird');
+
+// used for clearing database before create/populate queries are run
+DROP TABLE IF EXISTS Likes;
+DROP TABLE IF EXISTS Comment;
+DROP TABLE IF EXISTS Has;
+DROP TABLE IF EXISTS Tag;
+DROP TABLE IF EXISTS Follows;
+DROP TABLE IF EXISTS Artist_Wall;
+DROP TABLE IF EXISTS Art;
+
+// ============
+// Queries used in our application are below
+// These are formatted using template literals
+// ============
+
+// classes/Art.js
+`SELECT * FROM Comment WHERE Comment.art_id = '${art_id}' ORDER BY date_posted`
+`INSERT INTO Art(art_id, img_name, num_likes, date_posted, owner_username, description, content_rating, title) VALUES ('${art_id}', '${imgLocation}', '${0}', '${date_posted}','${username}','${description}','${content_rating}','${title}')`
+`INSERT INTO Tag(tag_name) VALUES (unnest(ARRAY[` + all_tags_string + `])) ON CONFLICT (tag_name) DO NOTHING; INSERT INTO Has(art_id,tag_name) VALUES ('${art_id}', unnest(ARRAY[` + all_tags_string + `]));`
+`SELECT * FROM Art WHERE art_id = '${art_id}'`
+`SELECT * FROM Has WHERE art_id = '${art_id}'`
+`INSERT INTO Tag(tag_name) VALUES ('${tag_name}') ON CONFLICT (tag_name) DO NOTHING; INSERT INTO Has(art_id, tag_name) VALUES ('${art_id}', '${tag_name}') ON CONFLICT (art_id, tag_name) DO NOTHING`
+`DELETE FROM Art WHERE Art.art_id = '${art_id}';`
+`SELECT * FROM Art WHERE NOT EXISTS(SELECT * FROM Artist_Wall WHERE NOT EXISTS (SELECT * FROM Likes WHERE Art.art_id = Likes.art_id AND Artist_Wall.username = Likes.username))`
+
+// classes/Artist.js
+`INSERT INTO Comment(comment_id,artist_username, art_id, date_posted,comment_text) VALUES ('${commentId}', '${artist_username}', '${artId}', '${datetime}', '${commentString}')`
+`DELETE FROM Comment WHERE comment_id = '${commentId}'`
+`SELECT * FROM Art WHERE owner_username = '${username}'`
+`INSERT INTO Artist_Wall(username, password, email_address, date_joined, birth_date) VALUES ('${username}', '${password}', '${email_address}', '${datetime}', '${birth_date}')`
+`SELECT * FROM Artist_Wall WHERE Artist_Wall.username IN (SELECT followee_username from Follows WHERE follower_username = '${username}')`
+`SELECT * FROM Artist_Wall WHERE Artist_Wall.username IN (SELECT follower_username from Follows WHERE followee_username = '${username}')`
+`SELECT * FROM Artist_Wall WHERE Artist_Wall.username = '${username}'`
+`SELECT * FROM Likes WHERE username = '${username}' and art_id = '${art_id}'`
+`SELECT * FROM follows WHERE follower_username = '${follower}' AND followee_username = '${followee}';`
+`INSERT INTO follows(follower_username,followee_username) VALUES ('${follower}','${followee}');`
+`DELETE FROM follows WHERE follower_username = '${follower}' AND followee_username = '${followee}';`
+`SELECT * FROM follows WHERE follower_username = '${follower}' AND followee_username = '${followee}'`
+`SELECT * FROM likes WHERE art_id = '${art_id}' AND likes.username = '${username}';`
+`INSERT INTO likes(art_id,username) VALUES ('${art_id}','${username}'); UPDATE Art SET num_likes = num_likes + 1 WHERE art_id = '${art_id}';`
+`DELETE FROM likes WHERE art_id = '${art_id}' AND username = '${username}'; UPDATE Art SET num_likes = num_likes - 1 WHERE art_id = '${art_id}';`
+`WITH following AS (SELECT followee_username FROM Follows WHERE follower_username='${username}') SELECT * FROM Art, following WHERE Art.owner_username = following.followee_username ORDER BY date_posted desc`
+`UPDATE Artist_Wall SET birth_date = '${birth_date}' WHERE username='${username}';`
+
+// classes/Comment.js
+`SELECT * FROM comment WHERE comment_id = '${comment_id}' ORDER BY date_posted`
+`INSERT INTO Comment(comment_id,artist_username, art_id, date_posted,comment_text) VALUES('${comment_id}','${owner_username}', '${art_id}', '${datetime}','${comment_text}');`
+
+// classes/Registry.js
+`SELECT * from Tag`
+`SELECT * from Art`
+`SELECT * from Artist_Wall`
+`SELECT * from Comment`
+
+// classes/Search.js
+'WITH ids AS' ((SELECT art_id FROM Has WHERE tag_name = '${tag}) INTERSECT (...)) SELECT * FROM ids JOIN Art ON Art.art_id = ids.art_id;'
+
+// classes/Tag.js
+`INSERT INTO Tag(tag_name) VALUES ('${tag_name}') ON CONFLICT (tag_name) DO NOTHING`
+`SELECT * FROM Art WHERE EXISTS (SELECT * FROM Has WHERE Has.tag_name = '${tag_name}' AND Has.art_id = Art.art_id)`
+
+// routes/index.js
+`SELECT MAX(foo.avg_num_likes) FROM (SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name) as foo`
+`SELECT MIN(foo.avg_num_likes) FROM (SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name) as foo`
+`SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name`
+`SELECT COUNT(tag_name) FROM tag`
+`SELECT COUNT(art_id) FROM art`
+`SELECT COUNT(username) FROM artist_wall`
+`SELECT tag_name, COUNT(tag_name) FROM Has GROUP BY tag_name`
+`SELECT * FROM Art WHERE NOT EXISTS(SELECT * FROM Artist_Wall WHERE NOT EXISTS (SELECT * FROM Likes WHERE Art.art_id = Likes.art_id AND Artist_Wall.username = Likes.username))`
