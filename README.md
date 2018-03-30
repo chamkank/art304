@@ -3,6 +3,8 @@ A social network for artists.
 - **Authors**: Patrick, Malinda, Andrew, Cham
 - **Stack**: [PostgreSQL](https://github.com/brianc/node-postgres), [Node.js](https://nodejs.org/), [Express](https://expressjs.com/),  and [Handlebars](https://github.com/wycats/handlebars.js/)
 
+Live at http://ec2-18-232-167-188.compute-1.amazonaws.com:3000
+
 ## Installation
 0. Ensure you have Node v8.11.1 or greater installed, along with yarn (`npm install -g yarn`)
 1. Clone the repo.
