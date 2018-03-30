@@ -21,10 +21,11 @@
     </div>
 
     <div class="card">
-        <img class="card-img-top" src="/public/art/{{art_info.img_location}}" style="max-width: 25em;">
+        <img class="card-img-top" src="/public/art/{{art_info.img_name}}" style="max-width: 25em;">
         <div class="card-body">
             <h5 class="card-title">{{art_info.title}}</h5>
             <p class="card-text">{{art_info.description}}</p>
+            <p class="card-text">- <i>{{art_info.owner_username}}</i></p>
         </div>
         <ul class="list-group list-group-flush" style="overflow:scroll; max-height: 200px;">
             {{#if comments}}

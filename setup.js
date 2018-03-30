@@ -3,18 +3,18 @@ var pool = require("./database");
 let tagString = 'CREATE TABLE IF NOT EXISTS Tag(tag_name char(20) primary key);';
 let artistWallString = 'CREATE TABLE IF NOT EXISTS Artist_Wall(username varchar(20) primary key, password varchar(20) NOT NULL, email_address varchar(254) unique NOT NULL, date_joined timestamp NOT NULL, birth_date date NOT NULL);';
 let likesString = 'CREATE TABLE IF NOT EXISTS Likes(art_id char(20) NOT NULL references Art(art_id) ON DELETE CASCADE ON UPDATE CASCADE, username char(20) NOT NULL references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(art_id, username));';
-let artString = 'CREATE TABLE IF NOT EXISTS Art(art_id char(20) primary key, img_location varchar(40) NOT NULL, num_likes int NOT NULL, date_posted timestamp NOT NULL, owner_username varchar(20) NOT NULL references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE , description varchar(100) NOT NULL, content_rating varchar(20) NOT NULL, title varchar(20) NOT NULL);';
+let artString = 'CREATE TABLE IF NOT EXISTS Art(art_id char(20) primary key, img_name varchar(40) NOT NULL, num_likes int NOT NULL, date_posted timestamp NOT NULL, owner_username varchar(20) NOT NULL references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE , description varchar(100) NOT NULL, content_rating varchar(20) NOT NULL, title varchar(20) NOT NULL);';
 let hasString = 'CREATE TABLE IF NOT EXISTS Has(art_id char(20) NOT NULL references Art(art_id) ON DELETE CASCADE ON UPDATE CASCADE, tag_name char(20) NOT NULL references Tag(tag_name) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(art_id, tag_name));';
 let followsString = 'CREATE TABLE IF NOT EXISTS Follows(follower_username char(20) NOT NULL references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE, followee_username char(20) NOT NULL references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(follower_username, followee_username));';
 let commentString = 'CREATE TABLE IF NOT EXISTS Comment(comment_id char(20) primary key, artist_username varchar(20) NOT NULL references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE, art_id varchar(20) NOT NULL references Art(art_id) ON DELETE CASCADE ON UPDATE CASCADE, date_posted timestamp NOT NULL, comment_text varchar(250) NOT NULL);';
 //let commentsOnString = 'CREATE TABLE IF NOT EXISTS Comments_On(comment_id char(20) references Comment(comment_id) ON DELETE CASCADE ON UPDATE CASCADE, artist_username varchar(20) references Artist_Wall(username) ON DELETE CASCADE ON UPDATE CASCADE, art_id varchar(20) references Art(art_id) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(comment_id, artist_username, art_id));';
 // added art_id to comment and got rid of comments_on
 
-let tagInsert2 = 'INSERT INTO Tag(tag_name) VALUES (\'painting\') ON CONFLICT (tag_name) DO NOTHING;';
-let tagInsert3 = 'INSERT INTO Tag(tag_name) VALUES (\'renaissance\') ON CONFLICT (tag_name) DO NOTHING;';
-let tagInsert4 = 'INSERT INTO tag(tag_name) VALUES (\'water colour\') ON CONFLICT (tag_name) DO NOTHING;';
-let tagInsert1 = "INSERT INTO Tag(tag_name) VALUES (\'cats\') ON CONFLICT (tag_name) DO NOTHING;";
-let tagInsert5 = "INSERT INTO Tag(tag_name) VALUES ('food');";
+let tagInsert2 = 'INSERT INTO Tag(tag_name) VALUES (\'painting\');';
+let tagInsert3 = 'INSERT INTO Tag(tag_name) VALUES (\'renaissance\');';
+let tagInsert4 = 'INSERT INTO tag(tag_name) VALUES (\'water colour\');';
+let tagInsert1 = "INSERT INTO Tag(tag_name) VALUES (\'cats\');";
+let tagInsert5 = "INSERT INTO Tag(tag_name) VALUES (\'bird\');";
 
 let artistWallInsert1 = 'INSERT INTO Artist_Wall(username,password,email_address,date_joined,birth_date) VALUES\n' +
     '(\'jo\',\'apple1234\',\'japple3@fake.mail\',\'2017-05-17 12:0:0.0\',\'2000-05-17\');';
@@ -33,31 +33,32 @@ let followsInsert1 = 'INSERT INTO Follows(follower_username, followee_username) 
 let followsInsert2 = 'INSERT INTO Follows(follower_username,followee_username) VALUES (\'joel\',\'jo\');';
 let followsInsert3 = 'INSERT INTO Follows(follower_username,followee_username) VALUES (\'joseph\',\'joel\');';
 let followsInsert4 = 'INSERT INTO Follows(follower_username,followee_username) VALUES (\'joel\',\'joseph\');';
-let followsInsert5 = "INSERT INTO Follows(follower_username,followee_username) VALUES ('jody','joel');";
+let followsInsert5 = "INSERT INTO Follows(follower_username,followee_username) VALUES ('jo','joseph');";
+let followsInsert6 = "INSERT INTO Follows(follower_username,followee_username) VALUES ('jo','jody');";
+let followsInsert7 = "INSERT INTO Follows(follower_username,followee_username) VALUES ('jo','joe');";
 
-let artInsert1 = 'INSERT INTO Art(art_id, img_location, num_likes, date_posted, owner_username,' +
+let artInsert1 = 'INSERT INTO Art(art_id, img_name, num_likes, date_posted, owner_username,' +
     ' content_rating, title, description) VALUES (\'i071PlEHxgpsGknfrqUY\',' +
-    '\'img/i071PlEHxgpsGknfrqUY.jpg\', 5, \'2017-05-17 12:0:0.0\', \'jo\', \'E\', \'Apple\', \'Basic food!\');';
+    '\'i071PlEHxgpsGknfrqUY.jpg\', 5, \'2017-05-17 12:0:0.0\', \'jo\', \'E\', \'Medieval Cat\', \'Now THIS is real art.\');';
 
-let artInsert2 = "INSERT INTO Art(art_id, img_location, num_likes, date_posted, owner_username,\n" +
+let artInsert2 = "INSERT INTO Art(art_id, img_name, num_likes, date_posted, owner_username,\n" +
     "    content_rating, title, description) VALUES ('Ol3WGWBPyU5hRQ1N6NyO',\n" +
-    "'img/Ol3WGWBPyU5hRQ1N6NyO.jpg', 0, '2017-05-09 12:35:0.123', 'jo', 'E', 'Cat!', 'My first\n" +
+    "'Ol3WGWBPyU5hRQ1N6NyO.jpg', 0, '2017-05-09 12:35:0.123', 'jo', 'E', 'Cat!', 'My first\n" +
     "painting');";
 
-let artInsert3 = "INSERT INTO Art(art_id, img_location, num_likes, date_posted, owner_username,\n" +
+let artInsert3 = "INSERT INTO Art(art_id, img_name, num_likes, date_posted, owner_username,\n" +
     "    content_rating, title, description) VALUES ('dvnKPdagczbod4DTB0XG',\n" +
-    "'img/dvnKPdagczbod4DTB0XG.png', 0, '2018-01-08 12:35:29.0', 'jo', 'E', 'Coconut', 'Inspired by\n" +
-    "my first trip to Hawaii');";
+    "'dvnKPdagczbod4DTB0XG.png', 0, '2018-01-08 12:35:29.0', 'jo', 'E', 'Earth', 'Made this in 5 mins!');";
 
-let artInsert4 = "INSERT INTO Art(art_id, img_location, num_likes, date_posted, owner_username,\n" +
+let artInsert4 = "INSERT INTO Art(art_id, img_name, num_likes, date_posted, owner_username,\n" +
     "    content_rating, title, description) VALUES ('ppr9KJ5rWbTxdtr6xVT3',\n" +
-    "'img/ppr9KJ5rWbTxdtr6xVT3.png', 0, '2018-01-08 12:35:29.123', 'joseph', 'E', 'Dodo', 'I tried to\n" +
+    "'ppr9KJ5rWbTxdtr6xVT3.png', 0, '2018-01-08 12:35:29.123', 'joseph', 'E', 'Dodo', 'I tried to\n" +
     "draw a bird');";
 
-let artInsert5 = "INSERT INTO Art(art_id, img_location, num_likes, date_posted, owner_username,\n" +
+let artInsert5 = "INSERT INTO Art(art_id, img_name, num_likes, date_posted, owner_username,\n" +
     "    content_rating, title, description) VALUES ('Qe9KNLi6L0CLCT2i68FB',\n" +
-    "'img/Qe9KNLi6L0CLCT2i68FB.svg', 0, '2018-01-08 12:35:29.123', 'joel', 'R', 'Renaissance?', 'I\n" +
-    "love watercolour!');";
+    "'Qe9KNLi6L0CLCT2i68FB.gif', 0, '2018-01-08 12:35:29.123', 'joel', 'R', 'Animated bird!', 'I\n" +
+    "love animation!');";
 
 
 let commentInsert1 = "INSERT INTO Comment(comment_id,artist_username, art_id, date_posted,comment_text) VALUES('YUqrfnkGspgxHElP170i','jo', 'i071PlEHxgpsGknfrqUY', '2017-05-17 12:0:0.0','Wow');";
@@ -82,9 +83,15 @@ let commmentsOnInsert5 = "INSERT INTO Comments_On(comment_id,artist_username,art
 
 let hasInsert1 = "INSERT INTO Has(art_id,tag_name) VALUES ('i071PlEHxgpsGknfrqUY', 'cats');";
 let hasInsert2 = "INSERT INTO Has(art_id,tag_name) VALUES ('i071PlEHxgpsGknfrqUY', 'painting');";
+
 let hasInsert3 = "INSERT INTO Has(art_id,tag_name) VALUES ('Ol3WGWBPyU5hRQ1N6NyO' ,'cats');";
 let hasInsert4 = "INSERT INTO Has(art_id,tag_name) VALUES ('Ol3WGWBPyU5hRQ1N6NyO' ,'renaissance');";
+
 let hasInsert5 = "INSERT INTO Has(art_id,tag_name) VALUES ('dvnKPdagczbod4DTB0XG' ,'water colour');";
+
+let hasInsert6 = "INSERT INTO Has(art_id,tag_name) VALUES ('ppr9KJ5rWbTxdtr6xVT3' ,'bird');";
+
+let hasInsert7 = "INSERT INTO Has(art_id,tag_name) VALUES ('Qe9KNLi6L0CLCT2i68FB' ,'bird');";
 
 
 let deleteLikesString = 'DROP TABLE IF EXISTS Likes;';
@@ -119,7 +126,7 @@ pool.query(deleteLikesString + deleteCommentString + deleteHasString + deleteTag
         if(err) {
             return console.error('error running query', err);
         }
-        pool.query(tagInsert1 + tagInsert2 + tagInsert3 + tagInsert4 + tagInsert5 + artistWallInsert1 + artistWallInsert2 + artistWallInsert3 + artistWallInsert4 + artistWallInsert5 + artInsert1 + artInsert2 + artInsert3 + artInsert4 + artInsert5 + commentInsert1 + commentInsert2 + commentInsert3 + commentInsert4 + commentInsert5 + followsInsert1 + followsInsert2 + followsInsert3 + followsInsert4 + followsInsert5 + hasInsert1 + hasInsert2 + hasInsert3 + hasInsert4 + hasInsert5 + likesInsert1 + likesInsert2 + likesInsert3 + likesInsert4 + likesInsert5, (err, res) => {
+        pool.query(tagInsert1 + tagInsert2 + tagInsert3 + tagInsert4 + tagInsert5 + artistWallInsert1 + artistWallInsert2 + artistWallInsert3 + artistWallInsert4 + artistWallInsert5 + artInsert1 + artInsert2 + artInsert3 + artInsert4 + artInsert5 + commentInsert1 + commentInsert2 + commentInsert3 + commentInsert4 + commentInsert5 + followsInsert1 + followsInsert2 + followsInsert3 + followsInsert4 + followsInsert5 + followsInsert6 + followsInsert7 + hasInsert1 + hasInsert2 + hasInsert3 + hasInsert4 + hasInsert5 + hasInsert6 + hasInsert7 + likesInsert1 + likesInsert2 + likesInsert3 + likesInsert4 + likesInsert5, (err, res) => {
             if(err) {
                 return console.error('error running query', err);
             }

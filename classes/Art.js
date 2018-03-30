@@ -45,7 +45,7 @@ art.postArt = function (username, imgLocation, title, description, tags, content
         var all_tags_string = all_tags.join(',');
         //console.log(all_tags_string);
         //var test_string = ["painting","food"];
-        db.query(`INSERT INTO Art(art_id, img_location, num_likes, date_posted, owner_username, description, content_rating, title) VALUES ('${art_id}', '${imgLocation}', '${0}', '${date_posted}','${username}','${description}','${content_rating}','${title}')`, (err, res) => {
+        db.query(`INSERT INTO Art(art_id, img_name, num_likes, date_posted, owner_username, description, content_rating, title) VALUES ('${art_id}', '${imgLocation}', '${0}', '${date_posted}','${username}','${description}','${content_rating}','${title}')`, (err, res) => {
             if (err) {
                 reject(err.detail);
             } else {

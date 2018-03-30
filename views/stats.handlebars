@@ -84,12 +84,16 @@
 <h5>Art Like by All Artists:</h5>
 {{#if allLiked}}
 {{#each allLiked}}
-    <h5>
+    <ul>
+    <li>
         Title:
         <a href="/art/{{art_id}}">{{title}}</a>
-    </h5>
+    </li>
+    </ul>
 {{/each}}
 {{else}}
-    <h5>ERROR: VALUE NOT SHOWN</h5>
+    <ul>
+    <li>ERROR: VALUE NOT SHOWN</li>
+    </ul>
 {{/if}}
 
