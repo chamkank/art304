@@ -1,6 +1,5 @@
-// The functional script used to populate the database can be found at https://github.com/chamkank/art304/blob/master/setup.js
+// The functional script used to create and populate the database can be found at https://github.com/chamkank/art304/blob/master/setup.js
 // This is simply a list of all create table, populate table, and queries used in the application
-
 
 CREATE TABLE IF NOT EXISTS Tag(tag_name char(20) primary key);
 CREATE TABLE IF NOT EXISTS Artist_Wall(username varchar(20) primary key, password varchar(20) NOT NULL, email_address varchar(254) unique NOT NULL, date_joined timestamp NOT NULL, birth_date date CHECK (birth_date < '2018-01-1') NOT NULL);
