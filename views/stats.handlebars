@@ -65,10 +65,8 @@
     </form>
 </div>
 
-
-
-
 <br>
+<div class="container">
 {{#if avgLikesPopularTag}}
     <h5>The most liked tag on average has this many likes:</h5>
     {{#each avgLikesPopularTag}}
@@ -78,8 +76,6 @@
 {{else}}
 {{! <h5>ERROR: VALUE NOT SHOWN</h5> }}
 {{/if}}
-</div>
-<br>
 {{#if avgLikesUnlikedTag}}
     <h5>The least liked tag on average has this many likes:</h5>
     {{#each avgLikesUnlikedTag}}
@@ -89,7 +85,6 @@
 {{else}}
 {{! <h5>ERROR: VALUE NOT SHOWN</h5> }}
 {{/if}}
-<br>
 {{#if avgLikesPerTaggedArt}}
     <h5>Average number of likes per art per tag:</h5>
     <ul>
@@ -103,8 +98,6 @@
 {{else}}
 {{! <h5>ERROR: VALUE NOT SHOWN</h5> }}
 {{/if}}
-<br>
-
 
 {{#if tagCount}}
     <h5>Number of different tags</h5>
@@ -115,7 +108,6 @@
 {{else}}
 {{! <h5>ERROR: VALUE NOT SHOWN</h5> }}
 {{/if}}
-<br>
 
 {{#if artCount}}
     <h5>Number of different art</h5>
@@ -137,7 +129,6 @@
 {{else}}
 {{! <h5>ERROR: VALUE NOT SHOWN</h5> }}
 {{/if}}
-<br>
 
 {{#if artTagCount}}
     <h5>Number of art for each tag</h5>
@@ -156,7 +147,7 @@
 
 
 {{#if allLiked}}
-    <h5>Art Like by All Artists:</h5>
+    <h5>Art liked by all artists:</h5>
     {{#each allLiked}}
         <ul>
             <li>
@@ -170,4 +161,5 @@
         <li>ERROR: VALUE NOT SHOWN</li>
     </ul>}}
 {{/if}}
-
+</div>
+</div>
