@@ -1,20 +1,27 @@
 <br>
 <h5>The most liked tag on average has this many likes:</h5>
-
+{{#if avgLikesPopularTag}}
 {{#each avgLikesPopularTag}}
 {{max}}
 <br>
 {{/each}}
+{{else}}
+<h5>ERROR: VALUE NOT SHOWN</h5>
+{{/if}}
 </div>
 <br>
 <h5>The least liked tag on average has this many likes:</h5>
+{{#if avgLikesUnlikedTag}}
 {{#each avgLikesUnlikedTag}}
 {{min}}
 <br>
 {{/each}}
+{{else}}
+    <h5>ERROR: VALUE NOT SHOWN</h5>
+{{/if}}
 <br>
 <h5>Average number of likes per art per tag:</h5>
-
+{{#if avgLikesPerTaggedArt}}
 <ul>
     {{#each avgLikesPerTaggedArt}}
     <li>
@@ -23,29 +30,44 @@
     </li>
     {{/each}}
 </ul>
+{{else}}
+    <h5>ERROR: VALUE NOT SHOWN</h5>
+{{/if}}
 <br>
-<h5>Number of different tags</h5>
 
+<h5>Number of different tags</h5>
+{{#if tagCount}}
 {{#each tagCount}}
 {{count}}
 <br>
 {{/each}}
+{{else}}
+    <h5>ERROR: VALUE NOT SHOWN</h5>
+{{/if}}
 <br>
 <h5>Number of different art</h5>
-
+{{#if artCount}}
 {{#each artCount}}
 {{count}}
 <br>
 {{/each}}
 <br>
-<h5>Number of different artists</h5>
+{{else}}
+    <h5>ERROR: VALUE NOT SHOWN</h5>
+{{/if}}
 
+<h5>Number of different artists</h5>
+{{#if artistCount}}
 {{#each artistCount}}
 {{count}}
 <br>
 {{/each}}
+{{else}}
+    <h5>ERROR: VALUE NOT SHOWN</h5>
+{{/if}}
 <br>
 <h5>Number of art for each tag</h5>
+{{#if artistCount}}
 <ul>
     {{#each artTagCount}}
     <li>
@@ -54,12 +76,20 @@
     </li>
     {{/each}}
 </ul>
+{{else}}
+    <h5>ERROR: VALUE NOT SHOWN</h5>
+{{/if}}
 
 
 <h5>Art Like by All Artists:</h5>
+{{#if allLiked}}
 {{#each allLiked}}
     <h5>
         Title:
         <a href="/art/{{art_id}}">{{title}}</a>
     </h5>
 {{/each}}
+{{else}}
+    <h5>ERROR: VALUE NOT SHOWN</h5>
+{{/if}}
+
