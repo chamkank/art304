@@ -1,23 +1,30 @@
 ## CS304 Group Project
 A social network for artists.
 - **Authors**: Patrick, Malinda, Andrew, Cham
-- **Stack**: [PostgreSQL](https://github.com/brianc/node-postgres), [Node.js](https://nodejs.org/), [Express](https://expressjs.com/), [React](https://github.com/facebook/react) with [Jest](https://github.com/facebook/jest) for testing
+- **Stack**: [PostgreSQL](https://github.com/brianc/node-postgres), [Node.js](https://nodejs.org/), [Express](https://expressjs.com/),  and [Handlebars](https://github.com/wycats/handlebars.js/)
 
 ## Installation
+0. Ensure you have Node v8.11.1 or greater installed, along with yarn (`npm install -g yarn`)
 1. Clone the repo.
 2. `yarn install` to install server (Express app) dependencies.
-3. `cd client && yarn install` to instead client (React app) dependencies.
+3. If you are a course TA, you must use the code submitted instead of cloning because it contains a secret config file. If you aren't a TA and cloned from the repo, you must create a config file containing passport secret and database connection URI in `/config/default.json` like so:
+```
+{
+    "db":{
+        "conString" : "postgres://<user>:<pass>@<url>:<port>/<db>"
+    },
+    "passport":{
+        "secret": "<secret-word>"
+    }
+}
+```
 
 ## Running Server & Client
 1. `yarn start`in main directory to run the server on port 3000.
-2. Open another console window and run `yarn start` in `/client/` directory to run client app on port 3001.
-3. Client will be live at http://localhost:3001.
+3. App will be live at http://localhost:3001.
 
-## Running Tests
-Tests are written in Jest for both the client and server.
-1. For info on writing tests with Jest, see [Client Documentation: Writing Tests](client#writing-tests).
-2. Use `yarn test` in main directory to run server tests.
-3. Use `yarn test` in client directory to run client tests.
+## Populating the Database
+Run `node setup.js`.
 
 ## Reference
 - [Client Documentation](client)
