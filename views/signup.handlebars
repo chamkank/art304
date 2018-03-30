@@ -13,5 +13,7 @@
 </form>
 
 {{#if failed }}
+    <br>
     <b><p style="color: red;">Sign up failed, please try again.</p></b>
+    <p>{{#if error}}Error was "{{error}}{{/if}}"</p>
 {{/if}}
