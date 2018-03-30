@@ -87,16 +87,45 @@ let hasInsert4 = "INSERT INTO Has(art_id,tag_name) VALUES ('Ol3WGWBPyU5hRQ1N6NyO
 let hasInsert5 = "INSERT INTO Has(art_id,tag_name) VALUES ('dvnKPdagczbod4DTB0XG' ,'water colour');";
 
 
-pool.query(tagString + artistWallString + followsString + artString + commentString + likesString + hasString, (err, res) => {
-    if(err) {
+let deleteLikesString = 'DROP TABLE IF EXISTS Likes;';
+let deleteCommentString = 'DROP TABLE IF EXISTS Comment;';
+let deleteHasString = 'DROP TABLE IF EXISTS Has;';
+let deleteTagString = 'DROP TABLE IF EXISTS Tag;';
+let deleteFollowsString = 'DROP TABLE IF EXISTS Follows;';
+let deleteArtistString = 'DROP TABLE IF EXISTS Artist_Wall;';
+let deleteArtString = 'DROP TABLE IF EXISTS Art;';
+
+
+
+
+pool.query(deleteLikesString + deleteCommentString + deleteHasString + deleteTagString + deleteFollowsString, (err, res) => {
+    if(err){
         return console.error('error running query', err);
     }
-    pool.query(tagInsert1 + tagInsert2 + tagInsert3 + tagInsert4 + tagInsert5 + artistWallInsert1 + artistWallInsert2 + artistWallInsert3 + artistWallInsert4 + artistWallInsert5 + artInsert1 + artInsert2 + artInsert3 + artInsert4 + artInsert5 + commentInsert1 + commentInsert2 + commentInsert3 + commentInsert4 + commentInsert5 + followsInsert1 + followsInsert2 + followsInsert3 + followsInsert4 + followsInsert5 + hasInsert1 + hasInsert2 + hasInsert3 + hasInsert4 + hasInsert5 + likesInsert1 + likesInsert2 + likesInsert3 + likesInsert4 + likesInsert5, (err, res) => {
 
+    pool.query(deleteArtString, (err, res) => {
+        if(err){
+            return console.error('error running query', err)
+        }
+    });
+
+    pool.query(deleteArtistString, (err, res) => {
+        if(err){
+            return console.error('error running query', err)
+        }
+    });
+
+    pool.query(tagString + artistWallString + followsString + artString + commentString + likesString + hasString, (err, res) => {
         if(err) {
             return console.error('error running query', err);
         }
+        pool.query(tagInsert1 + tagInsert2 + tagInsert3 + tagInsert4 + tagInsert5 + artistWallInsert1 + artistWallInsert2 + artistWallInsert3 + artistWallInsert4 + artistWallInsert5 + artInsert1 + artInsert2 + artInsert3 + artInsert4 + artInsert5 + commentInsert1 + commentInsert2 + commentInsert3 + commentInsert4 + commentInsert5 + followsInsert1 + followsInsert2 + followsInsert3 + followsInsert4 + followsInsert5 + hasInsert1 + hasInsert2 + hasInsert3 + hasInsert4 + hasInsert5 + likesInsert1 + likesInsert2 + likesInsert3 + likesInsert4 + likesInsert5, (err, res) => {
+            if(err) {
+                return console.error('error running query', err);
+            }
+        });
     });
+
 });
 
 
