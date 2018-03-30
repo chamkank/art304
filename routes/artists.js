@@ -112,9 +112,6 @@ router.get('/:username/followers', passport.ensureLoggedIn(), function(req, res,
     })
 });
 
-
-
-
 router.post('/:username/follow', passport.ensureLoggedIn(), function(req, res, next){
     var followee_username = req.params.username;
     var follower_username = req.user.username;

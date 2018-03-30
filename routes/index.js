@@ -4,6 +4,7 @@ var passport = require('../passport');
 var config = require('config');
 var artist = require('../classes/Artist');
 var db = require('../database');
+var formidable = require('formidable');
 
 var search = require('../classes/Search');
 
@@ -75,6 +76,7 @@ router.get('/search', function(req, res){
 });
 
 /* GET stats page */
+/*
 router.get('/stats', function(req, res) {
     //calc variable here vartocalc
     var state = res;
@@ -150,7 +152,118 @@ router.get('/stats', function(req, res) {
             });
         });
     });
+});*/
+
+
+router.get('/stats', function (req, res) {
+	res.render('stats');
 });
+
+router.post('/stats', function (req, res) {
+    let form2 = new formidable.IncomingForm();
+    form2.parse(req, function(err, fields, files) {
+        if (err)
+            return res.render('error');
+
+        let queryNumber = fields.stat;
+        //console.log(fields.stat);
+
+		var state = res;
+        if(fields.stat == 1){
+            // The most popular tag has this many likes on average (nested aggregation)
+            db.query(`SELECT MAX(foo.avg_num_likes) FROM (SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name) as foo`, (err, res) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    avgLikesPopularTag = res.rows;
+                    state.render('stats', {
+                        avgLikesPopularTag: avgLikesPopularTag
+                    });
+                }
+            });
+        } else if(fields.stat == 2){
+            db.query(`SELECT MIN(foo.avg_num_likes) FROM (SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name) as foo`, (err, res) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    avgLikesUnlikedTag = res.rows;
+                    state.render('stats', {
+                        avgLikesUnlikedTag: avgLikesUnlikedTag
+                    });
+                }
+            });
+        } else if(fields.stat == 3){
+            db.query(`SELECT tag_name, AVG(num_likes) AS avg_num_likes FROM Art, Has WHERE Art.art_id = Has.art_id GROUP BY tag_name`, (err, res) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    avgLikesPerTaggedArt = res.rows;
+                    state.render('stats', {
+                        avgLikesPerTaggedArt: avgLikesPerTaggedArt
+                    });
+                }
+            });
+		} else if(fields.stat == 4){
+            // Number of tags
+            db.query(`SELECT COUNT(tag_name) FROM tag`, (err, res) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    tagCount = res.rows;
+                    state.render('stats', {
+                        tagCount: tagCount
+                    });
+                }
+            });
+        } else if(fields.stat == 5){
+            // Number of art
+            db.query(`SELECT COUNT(art_id) FROM art`, (err, res) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    artCount = res.rows;
+                    state.render('stats', {
+                        artCount: artCount
+                    });
+                }
+            });
+        } else if(fields.stat == 6){
+            db.query(`SELECT COUNT(username) FROM artist_wall`, (err, res) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    artistCount = res.rows;
+                    state.render('stats', {
+                        artistCount: artistCount
+                    });
+                }
+            });
+        } else if(fields.stat == 7){
+            db.query(`SELECT tag_name, COUNT(tag_name) FROM Has GROUP BY tag_name`, (err, res) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    artTagCount = res.rows;
+                    state.render('stats', {
+                        artTagCount: artTagCount
+                    });
+                }
+            });
+        } else if(fields.stat == 8){
+            db.query(`SELECT * FROM Art WHERE NOT EXISTS(SELECT * FROM Artist_Wall WHERE NOT EXISTS (SELECT * FROM Likes WHERE Art.art_id = Likes.art_id AND Artist_Wall.username = Likes.username))`, (err, res) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    allLiked = res.rows;
+                    state.render('stats', {
+                        allLiked: allLiked
+                    });
+                }
+            });
+        }
+    });
+});
+
 router.post('/search', function(req, res){
   state = res;
   req = req.body;
